@@ -1,298 +1,228 @@
 {
-  "pluginAlias":"eWeLink",
-  "pluginType":"platform",
-  "singular":true,
-  "headerDisplay":"Homebridge plugin to control Sonoff relays with OEM firmware.",
-  "footerDisplay":"If you have any suggestions, please open an issue on [GitHub](https://github.com/thepotterfamily/homebridge-ewelink-beta/issues).",
-  "schema":{
-    "type":"object",
-    "properties":{
-      "name":{
-        "type":"string",
-        "default":"eWeLink"
-      },
-      "countryCode":{
-        "type":"integer",
-        "title":"Country Code",
-        "description":"The telephone country code linked to your eWeLink account (without the +).",
-        "placeholder":"1",
-        "maximum":999
-      },
-      "username":{
-        "type":"string",
-        "title":"Username",
-        "description":"The phone number or email address linked to your eWeLink account.",
-        "placeholder":""
-      },
-      "password":{
-        "type":"string",
-        "title":"Password",
-        "placeholder":"",
-        "description":"The password for your eWeLink account."
-      },
-      "debug":{
-        "title":"Debug Logging",
-        "type":"boolean",
-        "required":true,
-        "description":"If enabled, more information will be added to the Homebridge log.",
-        "default":false
-      },
-      "debugReqRes":{
-        "title":"Debug Logging (Requests & Responses)",
-        "type":"boolean",
-        "required":true,
-        "description":"If enabled, HTTP and web socket requests and responses will be added to the Homebridge log.",
-        "default":false
-      },
-      "apiHost":{
-        "title":"API Host",
-        "type":"string",
-        "required":true,
-        "description":"Specify a custom API host for your eWeLink account.",
-        "default":"eu-api.coolkit.cc",
-        "oneOf":[
-          {
-            "title":"eu-api.coolkit.cc",
-            "enum":[
-              "eu-api.coolkit.cc"
-            ]
-          },
-          {
-            "title":"us-api.coolkit.cc",
-            "enum":[
-              "us-api.coolkit.cc"
-            ]
-          },
-          {
-            "title":"as-api.coolkit.cc",
-            "enum":[
-              "as-api.coolkit.cc"
-            ]
-          },
-          {
-            "title":"cn-api.coolkit.cn",
-            "enum":[
-              "cn-api.coolkit.cn"
-            ]
-          }
-        ]
-      },
-      "wsHost":{
-        "title":"Web Socket Host",
-        "type":"string",
-        "required":true,
-        "description":"Specify a custom web socket host for your eWeLink account.",
-        "default":"eu-pconnect3.coolkit.cc",
-        "oneOf":[
-          {
-            "title":"eu-pconnect3.coolkit.cc",
-            "enum":[
-              "eu-pconnect3.coolkit.cc"
-            ]
-          },
-          {
-            "title":"us-pconnect3.coolkit.cc",
-            "enum":[
-              "us-pconnect3.coolkit.cc"
-            ]
-          },
-          {
-            "title":"as-pconnect3.coolkit.cc",
-            "enum":[
-              "as-pconnect3.coolkit.cc"
-            ]
-          },
-          {
-            "title":"cn-pconnect3.coolkit.cn",
-            "enum":[
-              "cn-pconnect3.coolkit.cn"
-            ]
-          }
-        ]
-      },
-      "sensorTimeLength":{
-        "type":"integer",
-        "title":"Motion Sensor Length",
-        "description":"The number of seconds which the sensor tile in the Home app will light up for if motion is detected by that sensor.",
-        "default":"2",
-        "maximum":999
-      },
-      "sensorTimeDifference":{
-        "type":"integer",
-        "title":"Motion Sensor Lag",
-        "description":"An offset in seconds to cancel any motion detection notifications if they is a delay between the sensor detecting the motion and Homebridge receiving the notification.",
-        "default":"120",
-        "maximum":999
-      },
-      "groups":{
-        "type":"array",
-        "title":"Groups",
-        "description":"You can group channels of multi-switch devices to simulate another HomeKit accessory instead of having each switch separately. Currently only blinds are supported.",
-        "items":{
-          "type":"object",
-          "properties":{
-            "type":{
-              "type":"string",
-              "title":"Type",
-              "default":"blind",
-              "description":"A description of this group.",
-              "oneOf":[
-                {
-                  "title":"Blind",
-                  "enum":[
-                    "blind"
-                  ]
-                }
-              ]
-            },
-            "deviceId":{
-              "type":"string",
-              "title":"Device ID",
-              "description":"Device ID from your eWeLink app (ten digits normally in the format 1000******)."
-            },
-            "switchUp":{
-              "type":"number",
-              "title":"Switch Up",
-              "default":1,
-              "required":true,
-              "description":"Switch number for the up motor.",
-              "oneOf":[
-                {
-                  "title":"1",
-                  "enum":[
-                    1
-                  ]
-                },
-                {
-                  "title":"2",
-                  "enum":[
-                    2
-                  ]
-                },
-                {
-                  "title":"3",
-                  "enum":[
-                    3
-                  ]
-                },
-                {
-                  "title":"4",
-                  "enum":[
-                    4
-                  ]
-                }
-              ]
-            },
-            "switchDown":{
-              "type":"number",
-              "title":"Switch Down",
-              "default":2,
-              "required":true,
-              "description":"Switch number for the down motor.",
-              "oneOf":[
-                {
-                  "title":"1",
-                  "enum":[
-                    1
-                  ]
-                },
-                {
-                  "title":"2",
-                  "enum":[
-                    2
-                  ]
-                },
-                {
-                  "title":"3",
-                  "enum":[
-                    3
-                  ]
-                },
-                {
-                  "title":"4",
-                  "enum":[
-                    4
-                  ]
-                }
-              ]
-            },
-            "timeUp":{
-              "type":"number",
-              "title":"Time Up",
-              "description":"Total time in seconds to fully open blinds (from closed).",
-              "default":20
-            },
-            "timeDown":{
-              "type":"number",
-              "title":"Time Down",
-              "description":"Total time in seconds to completely close blinds (from open).",
-              "default":40
-            },
-            "timeBottomMarginUp":{
-              "type":"number",
-              "title":"Time Bottom Margin Up",
-              "description":"Please refer <a href=\"https://github.com/manolab/homebridge-sonoff-stateful-blinds#readme\" target=\"_blank\">to this link</a> for more information about this setting.",
-              "default":0
-            },
-            "timeBottomMarginDown":{
-              "type":"number",
-              "title":"Time Bottom Margin Down",
-              "description":"Please refer <a href=\"https://github.com/manolab/homebridge-sonoff-stateful-blinds#readme\" target=\"_blank\">to this link</a> for more information about this setting.",
-              "default":0
+   "pluginAlias":"eWeLink",
+   "pluginType":"platform",
+   "singular":true,
+   "headerDisplay":"Homebridge plugin to control Sonoff devices with OEM firmware.",
+   "footerDisplay":"If you have any suggestions, please open an issue on [GitHub](https://github.com/thepotterfamily/homebridge-ewelink-sonoff/issues).",
+   "schema":{
+      "type":"object",
+      "properties":{
+         "name":{
+            "type":"string",
+            "default":"eWeLink"
+         },
+         "countryCode":{
+            "type":"integer",
+            "title":"Country Code",
+            "description":"The telephone country code linked to your eWeLink account (without the +).",
+            "placeholder":"1",
+            "maximum":999
+         },
+         "username":{
+            "type":"string",
+            "title":"Username",
+            "description":"The phone number or email address linked to your eWeLink account.",
+            "placeholder":""
+         },
+         "password":{
+            "type":"string",
+            "title":"Password",
+            "placeholder":"",
+            "description":"The password for your eWeLink account."
+         },
+         "debug":{
+            "title":"Debug Logging",
+            "type":"boolean",
+            "required":true,
+            "description":"If enabled, more information will be added to the Homebridge log.",
+            "default":false
+         },
+         "sensorTimeLength":{
+            "type":"integer",
+            "title":"Motion Sensor Length",
+            "description":"The number of seconds which the sensor tile in the Home app will light up for if motion is detected by that sensor.",
+            "default":"2",
+            "maximum":999
+         },
+         "sensorTimeDifference":{
+            "type":"integer",
+            "title":"Motion Sensor Lag",
+            "description":"An offset in seconds to cancel any motion detection notifications if they is a delay between the sensor detecting the motion and Homebridge receiving the notification.",
+            "default":"120",
+            "maximum":999
+         },
+         "groups":{
+            "type":"array",
+            "title":"Groups",
+            "description":"You can group channels of multi-switch devices to simulate another HomeKit accessory instead of having each switch separately. Currently only blinds and garage doors are supported.",
+            "items":{
+               "type":"object",
+               "properties":{
+                  "type":{
+                     "type":"string",
+                     "title":"Type",
+                     "default":"blind",
+                     "description":"A description of this group.",
+                     "oneOf":[
+                        {
+                           "title":"Blind",
+                           "enum":[
+                              "blind"
+                           ]
+                        },
+                        {
+                           "title":"Garage Door",
+                           "enum":[
+                              "garageDoor"
+                           ]
+                        }
+                     ]
+                  },
+                  "deviceId":{
+                     "type":"string",
+                     "title":"Device ID",
+                     "description":"Device ID from your eWeLink app (ten digits normally in the format 1000******)."
+                  },
+                  "switchUp":{
+                     "type":"number",
+                     "title":"Switch Up",
+                     "default":1,
+                     "required":true,
+                     "description":"Switch number for the up motor.",
+                     "oneOf":[
+                        {
+                           "title":"1",
+                           "enum":[
+                              1
+                           ]
+                        },
+                        {
+                           "title":"2",
+                           "enum":[
+                              2
+                           ]
+                        },
+                        {
+                           "title":"3",
+                           "enum":[
+                              3
+                           ]
+                        },
+                        {
+                           "title":"4",
+                           "enum":[
+                              4
+                           ]
+                        }
+                     ]
+                  },
+                  "switchDown":{
+                     "type":"number",
+                     "title":"Switch Down",
+                     "default":2,
+                     "required":true,
+                     "description":"Switch number for the down motor.",
+                     "oneOf":[
+                        {
+                           "title":"1",
+                           "enum":[
+                              1
+                           ]
+                        },
+                        {
+                           "title":"2",
+                           "enum":[
+                              2
+                           ]
+                        },
+                        {
+                           "title":"3",
+                           "enum":[
+                              3
+                           ]
+                        },
+                        {
+                           "title":"4",
+                           "enum":[
+                              4
+                           ]
+                        }
+                     ]
+                  },
+                  "timeUp":{
+                     "type":"number",
+                     "title":"Time Up",
+                     "description":"Total time in seconds to fully open blinds (from closed).",
+                     "default":20
+                  },
+                  "timeDown":{
+                     "type":"number",
+                     "title":"Time Down",
+                     "description":"Total time in seconds to completely close blinds (from open).",
+                     "default":40
+                  },
+                  "timeBottomMarginUp":{
+                     "type":"number",
+                     "title":"Time Bottom Margin Up",
+                     "description":"Please refer <a href=\"https://github.com/manolab/homebridge-sonoff-stateful-blinds#readme\" target=\"_blank\">to this link</a> for more information about this setting.",
+                     "default":0
+                  },
+                  "timeBottomMarginDown":{
+                     "type":"number",
+                     "title":"Time Bottom Margin Down",
+                     "description":"Please refer <a href=\"https://github.com/manolab/homebridge-sonoff-stateful-blinds#readme\" target=\"_blank\">to this link</a> for more information about this setting.",
+                     "default":0
+                  }
+               }
             }
-          }
-        }
+         }
+      },
+      "required":[
+         "countryCode",
+         "username",
+         "password"
+      ]
+   },
+   "layout":[
+      {
+         "type":"fieldset",
+         "items":[
+            "countryCode",
+            "username",
+            "password"
+         ]
+      },
+      {
+         "key":"groups",
+         "expandable":true,
+         "add":"Add Another Group",
+         "type":"array",
+         "items":[
+            {
+               "type":"fieldset",
+               "items":[
+                  "groups[].type",
+                  "groups[].deviceId",
+                  "groups[].switchUp",
+                  "groups[].switchDown",
+                  "groups[].timeUp",
+                  "groups[].timeDown",
+                  "groups[].timeBottomMarginUp",
+                  "groups[].timeBottomMarginUp"
+               ]
+            }
+         ]
+      },
+      {
+         "type":"fieldset",
+         "title":"Optional",
+         "description":"Only adjust these settings if you know what you are doing.",
+         "expandable":true,
+         "items":[
+            "debug",
+            "sensorTimeLength",
+            "sensorTimeDifference"
+         ]
       }
-    },
-    "required":[
-      "countryCode",
-      "username",
-      "password"
-    ]
-  },
-  "layout":[
-    {
-      "type":"fieldset",
-      "items":[
-        "countryCode",
-        "username",
-        "password"
-      ]
-    },
-    {
-      "key":"groups",
-      "expandable":true,
-      "add":"Add Another Group",
-      "type":"array",
-      "items":[
-        {
-          "type":"fieldset",
-          "items":[
-            "groups[].type",
-            "groups[].deviceId",
-            "groups[].switchUp",
-            "groups[].switchDown",
-            "groups[].timeUp",
-            "groups[].timeDown",
-            "groups[].timeBottomMarginUp",
-            "groups[].timeBottomMarginUp"
-          ]
-        }
-      ]
-    },
-    {
-      "type":"fieldset",
-      "title":"Optional",
-      "description":"Only adjust these settings if you know what you are doing.",
-      "expandable":true,
-      "items":[
-        "debug",
-        "debugReqRes",
-        "apiHost",
-        "wsHost",
-        "sensorTimeLength",
-        "sensorTimeDifference"
-      ]
-    }
-  ]
+   ]
 }
