@@ -454,7 +454,7 @@ class eWeLink {
    }
    addAccessory(device, hbDeviceId, service) {
       if (platform.devicesInHB.get(hbDeviceId)) return; // device is already in Homebridge.
-      let channelCount = service === "bridge" ? Object.keys(device.params.rfList).length : platform.constants.chansFromUiid[device.uiid];
+      let channelCount = service === "bridge" ? Object.keys(device.params.rfList).length : constants.chansFromUiid[device.uiid];
       let group;
       let switchNumber = hbDeviceId.substr(-1);
       let newDeviceName = device.name;
