@@ -803,7 +803,7 @@ class eWeLink {
       }
       let cPos = accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.CurrentPosition).value;
       let tPos = accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.TargetPosition).value;
-      let cSte = accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.PositionState).value;
+      let cSta = accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.PositionState).value;
       let timestamp = Date.now();
       let payload = {
          apikey: accessory.context.eweApiKey,
@@ -868,13 +868,13 @@ class eWeLink {
             ]
          }
       };
-      if (cSte < 2) { // ie it's currently moving [either up or down]
+      if (cSta < 2) { // ie it's currently moving [either up or down]
          let diffPosition = Math.abs(value - tPos);
          let actualPosition = value;
          let diffTime = 0;
          let diff = 0;
          if (diffPosition > 0) {
-            if (cSte === 1) {
+            if (cSta === 1) {
                diffPosition = tPos - value;
                diffTime = Math.round(accessory.context.percentDurationDown * diffPosition);
                actualPosition = Math.round(cPos - ((timestamp - accessory.context.startTimestamp) / accessory.context.percentDurationDown));
@@ -901,9 +901,9 @@ class eWeLink {
                }
                accessory.getService(Service.WindowCovering).updateCharacteristic(Characteristic.CurrentPosition, actualPosition);
                accessory.getService(Service.WindowCovering).updateCharacteristic(Characteristic.TargetPosition, value);
-               accessory.getService(Service.WindowCovering).updateCharacteristic(Characteristic.PositionState, cSte === 0 ? 1 : 0);
-               payload.params.switches[accessory.context.switchUp].switch = cSte === 1 ? "on" : "off";
-               payload.params.switches[accessory.context.switchDown].switch = cSte === 0 ? "on" : "off";
+               accessory.getService(Service.WindowCovering).updateCharacteristic(Characteristic.PositionState, cSta === 0 ? 1 : 0);
+               payload.params.switches[accessory.context.switchUp].switch = cSta === 1 ? "on" : "off";
+               payload.params.switches[accessory.context.switchDown].switch = cSta === 0 ? "on" : "off";
                platform.wsSendUpdate(payload, function() {
                   return;
                });
@@ -1267,7 +1267,7 @@ class eWeLink {
    externalBlindUpdate(accessory, params) {
       let cPos = accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.CurrentPosition).value;
       let tPos = accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.TargetPosition).value;
-      let cSte = accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.PositionState).value;
+      let cSta = accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.PositionState).value;
       let switchUp = params.switches[accessory.context.switchUp].switch === "on" ? 2 : 0;
       let switchDown = params.switches[accessory.context.switchDown].switch === "on" ? 1 : 0;
       let state;
@@ -1289,18 +1289,18 @@ class eWeLink {
          case 2:
          default:
             let timestamp = Date.now();
-            if (cSte === 2) {
+            if (cSta === 2) {
                return;
-            } else if (cSte === 1) {
+            } else if (cSta === 1) {
                cPos = Math.round(cPos - ((timestamp - accessory.context.startTimestamp) / accessory.context.percentDurationDown));
-            } else if (cSte === 0) {
+            } else if (cSta === 0) {
                cPos = Math.round(cPos + ((timestamp - accessory.context.startTimestamp) / accessory.context.percentDurationUp));
             }
             accessory.context.targetTimestamp = Date.now() + 10;
             accessory.getService(Service.WindowCovering).updateCharacteristic(Characteristic.TargetPosition, cPos);
             break;
          case 1:
-            if (cSte === 1) {
+            if (cSta === 1) {
                return;
             }
             if (tPos !== 0) {
@@ -1308,7 +1308,7 @@ class eWeLink {
             }
             break;
          case 0:
-            if (cSte === 0) {
+            if (cSta === 0) {
                return;
             }
             if (tPos != 100) {
