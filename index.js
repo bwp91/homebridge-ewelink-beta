@@ -682,16 +682,19 @@ class eWeLink {
       }
       try {
          if (accessory.getService(Service.WindowCovering)) {
+            accessory.context.type = "blind";
             accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.TargetPosition)
                .on("set", function(value, callback) {
                   platform.internalBlindUpdate(accessory, value, callback);
                });
          } else if (accessory.getService(Service.GarageDoorOpener)) {
+            accessory.context.type = "garageDoor";
             accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.TargetDoorState)
                .on("set", function(value, callback) {
                   platform.internalGarageDoorUpdate(accessory, value, callback);
                });
          } else if (accessory.getService(Service.Fan)) {
+            accessory.context.type = "fan";
             accessory.getService(Service.Fan).getCharacteristic(Characteristic.On)
                .on("set", function(value, callback) {
                   platform.internalFanUpdate(accessory, "power", value, callback);
@@ -707,17 +710,20 @@ class eWeLink {
                .on("set", function(value, callback) {
                   platform.internalFanUpdate(accessory, "light", value, callback);
                });
-         } else if (accessory.getService(Service.Switch)) {
+         } else if (accessory.getService(Service.Switch) && constants.devicesThermostat.includes(accessory.context.eweUIID)) {
+            accessory.context.type = "thermostat";
             accessory.getService(Service.Switch).getCharacteristic(Characteristic.On)
                .on("set", function(value, callback) {
                   platform.internalThermostatUpdate(accessory, value, callback);
                });
          } else if (accessory.getService(Service.Outlet)) {
+            accessory.context.type = "outlet";
             accessory.getService(Service.Outlet).getCharacteristic(Characteristic.On)
                .on("set", function(value, callback) {
                   platform.internalOutletUpdate(accessory, value, callback);
                });
          } else if (accessory.getService(Service.Lightbulb)) {
+            accessory.context.type = "light";
             accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.On)
                .on("set", function(value, callback) {
                   if (accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.On).value !== value) {
@@ -781,11 +787,13 @@ class eWeLink {
                   });
             }
          } else if (accessory.getService(Service.Switch)) {
+            accessory.context.type = "switch";
             accessory.getService(Service.Switch).getCharacteristic(Characteristic.On)
                .on("set", function(value, callback) {
                   platform.internalSwitchUpdate(accessory, value, callback);
                });
          } else if (accessory.getService(Service.MotionSensor)) {
+            accessory.context.type = "bridge";
             accessory.getService(Service.MotionSensor).setCharacteristic(Characteristic.MotionDetected, false);
          } else {
             throw "Type error - please try removing the accessory from the Homebridge cache";
