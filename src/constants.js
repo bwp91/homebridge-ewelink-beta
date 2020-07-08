@@ -9,7 +9,7 @@ const UIID_TO_CHAN = {
    8: 3, // "SWITCH_3"                               \\ T1 3C, TX3C
    9: 4, // "SWITCH_4"                               \\ 
    10: 0, // "OSPF"                                   \\ 
-   11: 0, // "CURTAIN"                                \\ 
+   11: 0, // "CURTAIN"                                \\ King Q4 Cover
    12: 0, // "EW-RE"                                  \\ 
    13: 0, // "FIREPLACE"                              \\ 
    14: 1, // "SWITCH_CHANGE"                          \\ 
@@ -21,7 +21,7 @@ const UIID_TO_CHAN = {
    22: 1, // "RGB_BALL_LIGHT"                         \\ B1, B1_R2
    23: 0, // "NEST_THERMOSTAT"                        \\ 
    24: 1, // "GSM_SOCKET"                             \\
-   25: 0, // "AROMATHERAPY",                          \\
+   25: 0, // "AROMATHERAPY",                          \\ Diffuser
    26: 0, // "BJ_THERMOSTAT",                         \\
    27: 1, // "GSM_UNLIMIT_SOCKET"                     \\
    28: 1, // "RF_BRIDGE"                              \\ RFBridge, RF_Bridge
