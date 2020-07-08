@@ -295,7 +295,7 @@ class eWeLink {
                      version: 8
                   };
                   platform.ws.send(JSON.stringify(payload));
-                  if (platform.debug) platform.log.warn("Sending web socket login request. This message is yellow for clarity. It is not an error.\n" + JSON.stringify(payload, null, 2));
+                  if (platform.debug) platform.log.warn("Sending web socket login request. This text is yellow so it's clearer to distinguish. It is not an error.\n" + JSON.stringify(payload, null, 2));
                };
                platform.ws.onerror = function (e) {
                   platform.log.error("Web socket error - [%s].", e);
@@ -312,7 +312,7 @@ class eWeLink {
                };
                platform.ws.onmessage = function (m) {
                   if (m === "pong") return;
-                  if (platform.debug) platform.log.warn("Web socket message received. This message is yellow for clarity. It is not an error.\n" + JSON.stringify(JSON.parse(m), null, 2));
+                  if (platform.debug) platform.log.warn("Web socket message received. This text is yellow so it's clearer to distinguish. It is not an error.\n" + JSON.stringify(JSON.parse(m), null, 2));
                   let device;
                   try {
                      device = JSON.parse(m);
@@ -1489,7 +1489,7 @@ class eWeLink {
       };
       if (platform.config.username.includes("@")) data.email = platform.config.username;
       else data.phoneNumber = platform.config.username;
-      if (platform.debug) platform.log.warn("Sending HTTP login request. This message is yellow for clarity. It is not an error.\n" + JSON.stringify(data, null, 2));
+      if (platform.debug) platform.log.warn("Sending HTTP login request. This text is yellow so it's clearer to distinguish. It is not an error.\n" + JSON.stringify(data, null, 2));
       axios({
          method: "post",
          url: "https://" + platform.apiHost + "/api/user/login",
@@ -1564,7 +1564,7 @@ class eWeLink {
             } catch (e) {
                platform.ws.emit("error", e);
             }
-            if (platform.debug) platform.log.warn("Web socket message sent. This message is yellow for clarity. It is not an error.\n" + JSON.stringify(json, null, 2));
+            if (platform.debug) platform.log.warn("Web socket message sent. This text is yellow so it's clearer to distinguish. It is not an error.\n" + JSON.stringify(json, null, 2));
             callback();
          }
          platform.delaySend = platform.delaySend <= 0 ? 0 : platform.delaySend -= 280;
