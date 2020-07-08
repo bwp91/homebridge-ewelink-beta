@@ -1469,7 +1469,7 @@ class eWeLink {
          }
       }).then((res) => {
          let body = res.data;
-         if (!body.region) throw "Server did not response with a region.\n" + JSON.stringify(body, null, 2);
+         if (!body.region) throw "Server did not respond with a region.\n" + JSON.stringify(body, null, 2);
          switch (body.region) {
          case "eu":
          case "us":
@@ -1513,7 +1513,7 @@ class eWeLink {
          }
       }).then((res) => {
          let body = res.data;
-         if (!body.at) throw "Server did not response with an authentication token. Please double check your eWeLink username and password in the Homebridge configuration.\n" + JSON.stringify(body, null, 2);
+         if (!body.at) throw "Server did not respond with an authentication token. Please double check your eWeLink username and password in the Homebridge configuration.\n" + JSON.stringify(body, null, 2);
          platform.aToken = body.at;
          platform.apiKey = body.user.apikey;
          if (platform.debug) {
@@ -1547,7 +1547,7 @@ class eWeLink {
          }
       }).then((res) => {
          let body = res.data;
-         if (!body.domain) throw "Server did not response with a web socket host.";
+         if (!body.domain) throw "Server did not respond with a web socket host.";
          if (platform.debug) platform.log("Web socket host received [%s].", body.domain);
          platform.wsHost = body.domain;
          callback(platform.wsHost);
