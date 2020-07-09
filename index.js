@@ -565,7 +565,11 @@ class eWeLink {
          }
          break;
       case "sensor":
-         return true;
+         if (newParams.hasOwnProperty("switch")) {
+            platform.externalSensorUpdate(accessory, newParams);
+            return true;
+         }
+         break;
       case "fan":
          if (Array.isArray(newParams.switches)) {
             platform.externalFanUpdate(accessory, newParams);
@@ -1232,6 +1236,12 @@ class eWeLink {
          .updateCharacteristic(Characteristic.TargetDoorState, cVal === 0 ? 1 : 0)
          .updateCharacteristic(Characteristic.CurrentDoorState, cVal === 0 ? 1 : 0);
    }
+   externalSensorUpdate(accessory, params) {
+      if (platform.debug) {
+         platform.log("[%s] will be refreshed.", accessory.displayName);
+      }
+      accessory.getService(Service.ContactSensor).updateCharacteristic(Characteristic.ContactSensorState, params.switch === "on" ? 1 : 0);
+   }
    externalFanUpdate(accessory, params) {
       if (platform.debug) {
          platform.log("[%s] will be refreshed.", accessory.displayName);
@@ -1312,7 +1322,7 @@ class eWeLink {
          case 22: // B1
             if (params.hasOwnProperty("zyx_mode")) {
                mode = parseInt(params.zyx_mode);
-            } else if (params.hasOwnProperty("channel0") && (params.channel0.parseInt() + params.channel1.parseInt() > 0)) {
+            } else if (params.hasOwnProperty("channel0") && (parseInt(params.channel0) + parseInt(params.channel1) > 0)) {
                mode = 1;
             } else {
                mode = 2;
