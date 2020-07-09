@@ -649,7 +649,7 @@ class eWeLink {
                      });
                   accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.Saturation)
                      .on("set", function(value, callback) {
-                        accessory.getService(Service.Lightbulb).setCharacteristic(Characteristic.Saturation, value);
+                        accessory.getService(Service.Lightbulb).updateCharacteristic(Characteristic.Saturation, value);
                         callback();
                      });
                }
@@ -782,7 +782,7 @@ class eWeLink {
                   });
                accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.Saturation)
                   .on("set", function(value, callback) {
-                     accessory.getService(Service.Lightbulb).setCharacteristic(Characteristic.Saturation, value);
+                     accessory.getService(Service.Lightbulb).updateCharacteristic(Characteristic.Saturation, value);
                      callback();
                   });
             }
@@ -1165,7 +1165,6 @@ class eWeLink {
       }, 250);
    }
    internalHSBUpdate(accessory, type, value, callback) {
-      let newRGB;
       let curHue = accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.Hue).value;
       let curSat = accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.Saturation).value;
       let payload = {
@@ -1174,12 +1173,15 @@ class eWeLink {
          params: {}
       };
       if (type === "hue") {
-         newRGB = convert.hsv.rgb(value, curSat, 100);
+         let newRGB = convert.hsv.rgb(value, curSat, 100);
          if (accessory.context.eweUIID === 22) { // B1
             payload.params.zyx_mode = 2;
-            payload.params.channel2 = newRGB[0];
-            payload.params.channel3 = newRGB[1];
-            payload.params.channel4 = newRGB[2];
+            payload.params.type = "middle";
+            payload.params.channel0 = "0";
+            payload.params.channel1 = "0";
+            payload.params.channel2 = newRGB[0].toString();
+            payload.params.channel3 = newRGB[1].toString();
+            payload.params.channel4 = newRGB[2].toString();
          } else if (accessory.context.eweUIID === 59) { // L1
             payload.params.mode = 1;
             payload.params.colorR = newRGB[0];
@@ -1192,11 +1194,14 @@ class eWeLink {
          accessory.getService(Service.Lightbulb).updateCharacteristic(Characteristic.Hue, value);
       } else if (type === "bri") {
          if (accessory.context.eweUIID === 22) { // B1
-            newRGB = convert.hsv.rgb(curHue, curSat, value);
+            let newRGB = convert.hsv.rgb(curHue, curSat, value);
             payload.params.zyx_mode = 2;
-            payload.params.channel2 = newRGB[0];
-            payload.params.channel3 = newRGB[1];
-            payload.params.channel4 = newRGB[2];
+            payload.params.type = "middle";
+            payload.params.channel0 = "0";
+            payload.params.channel1 = "0";
+            payload.params.channel2 = newRGB[0].toString();
+            payload.params.channel3 = newRGB[1].toString();
+            payload.params.channel4 = newRGB[2].toString();
          } else if (accessory.context.eweUIID === 59) { // L1
             payload.params.mode = 1;
             payload.params.bright = value;
