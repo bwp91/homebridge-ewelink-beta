@@ -52,8 +52,8 @@ class eWeLink {
                //**************************************//
                // THEN WE SET UP THE WEB SOCKET CLIENT //
                platform.wsClient = new eWeLinkWS(platform.log, platform.apiHost, platform.aToken, platform.apiKey, platform.debug);
-               //***********************************//
-               // GET THE WEB SOCKET HOST BY REGION //
+               //*********************************************************//
+               // GET THE WEB SOCKET HOST BY REGION AND CREATE CONNECTION //
                platform.wsClient.getHost().then(res => {
                   platform.wsHost = res;
                   platform.wsClient.login();
