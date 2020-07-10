@@ -86,61 +86,83 @@ class eWeLink {
             if (platform.devicesInEwe.size > 0) {
                platform.devicesInEwe.forEach((device) => {
                   let accessory;
-                  // Add non-existing devices
                   if (!platform.devicesInHB.has(device.deviceid + "SWX") && !platform.devicesInHB.has(device.deviceid + "SW0")) {
-                     if (platform.customGroup.has(device.deviceid + "SWX")) { //*** CUSTOM GROUPS ***//
-                        if (platform.customGroup.get(device.deviceid) + "SWX".type === "blind" && Array.isArray(device.params.switches)) {
-                           platform.addAccessory(device, device.deviceid + "SWX", "blind");
-                        } else if (platform.customGroup.get(device.deviceid + "SWX").type === "garageDoor" && device.params.hasOwnProperty("switch")) {
-                           platform.addAccessory(device, device.deviceid + "SWX", "garageDoor");
+                     if (platform.customGroup.has(device.deviceid + "SWX")) {
+                        //*** [ADD] BLINDS ***//
+                        if (platform.customGroup.get(device.deviceid) + "SWX".type === "cusBlind" && Array.isArray(device.params.switches)) {
+                           platform.addAccessory(device, device.deviceid + "SWX", "cusBlind");
                         }
-                     } else if (constants.devicesSensor.includes(device.uiid)) { //*** CONTACT SENSORS ***//
+                        //*** [ADD] GARAGES ***//
+                        else if (platform.customGroup.get(device.deviceid + "SWX").type === "cusGarage" && device.params.hasOwnProperty("switch")) {
+                           platform.addAccessory(device, device.deviceid + "SWX", "cusGarage");
+                        }
+                     }
+                     //*** [ADD] SENSORS ***//
+                     else if (constants.devicesSensor.includes(device.uiid)) {
                         if (device.params.hasOwnProperty("switch")) {
                            platform.addAccessory(device, device.deviceid + "SWX", "sensor");
                         }
-                     } else if (constants.devicesFan.includes(device.uiid)) { //*** FANS ***//
+                     }
+                     //*** [ADD] FANS ***//
+                     else if (constants.devicesFan.includes(device.uiid)) {
                         if (Array.isArray(device.params.switches)) {
                            platform.addAccessory(device, device.deviceid + "SWX", "fan");
                         }
-                     } else if (constants.devicesThermostat.includes(device.uiid)) { //*** THERMOSTATS ***//     
+                     }
+                     //*** [ADD] THERMOSTATS ***//
+                     else if (constants.devicesThermostat.includes(device.uiid)) {
                         if (device.params.hasOwnProperty("switch") || device.params.hasOwnProperty("mainSwitch")) {
                            platform.addAccessory(device, device.deviceid + "SWX", "thermostat");
                         }
-                     } else if (constants.devicesOutlet.includes(device.uiid)) { //*** OUTLETS ***//     
+                     }
+                     //*** [ADD] OUTLETS ***//
+                     else if (constants.devicesOutlet.includes(device.uiid)) {
                         if (device.params.hasOwnProperty("switch")) {
                            platform.addAccessory(device, device.deviceid + "SWX", "outlet");
                         }
-                     } else if (constants.devicesSingleSwitch.includes(device.uiid) && constants.devicesSingleSwitchLight.includes(device.productModel)) {
+                     }
+                     //*** [ADD] SINGLE LIGHTS ***//
+                     else if (constants.devicesSingleSwitch.includes(device.uiid) && constants.devicesSingleSwitchLight.includes(device.productModel)) {
                         if (device.params.hasOwnProperty("switch") || device.params.hasOwnProperty("state")) {
                            platform.addAccessory(device, device.deviceid + "SWX", "light");
                         }
-                     } else if (constants.devicesMultiSwitch.includes(device.uiid) && constants.devicesMultiSwitchLight.includes(device.productModel)) {
+                     }
+                     //*** [ADD] MULTI LIGHTS ***//
+                     else if (constants.devicesMultiSwitch.includes(device.uiid) && constants.devicesMultiSwitchLight.includes(device.productModel)) {
                         if (Array.isArray(device.params.switches)) {
                            for (let i = 0; i <= constants.chansFromUiid[device.uiid]; i++) {
                               platform.addAccessory(device, device.deviceid + "SW" + i, "light");
                            }
                         }
-                     } else if (constants.devicesSingleSwitch.includes(device.uiid)) { //*** SINGLE SWITCHES ***//
+                     }
+                     //*** [ADD] SINGLE SWITCHES ***//
+                     else if (constants.devicesSingleSwitch.includes(device.uiid)) {
                         if (device.params.hasOwnProperty("switch")) {
                            platform.addAccessory(device, device.deviceid + "SWX", "switch");
                         }
-                     } else if (constants.devicesMultiSwitch.includes(device.uiid)) { //*** MULTI SWITCHES ***//
+                     }
+                     //*** [ADD] MULTI SWITCHES ***//
+                     else if (constants.devicesMultiSwitch.includes(device.uiid)) {
                         if (Array.isArray(device.params.switches)) {
                            for (let i = 0; i <= constants.chansFromUiid[device.uiid]; i++) {
                               platform.addAccessory(device, device.deviceid + "SW" + i, "switch");
                            }
                         }
-                     } else if (constants.devicesBridge.includes(device.uiid)) { //*** BRIDGES ***//
+                     }
+                     //*** [ADD] BRIDGES ***//
+                     else if (constants.devicesBridge.includes(device.uiid)) {
                         if (device.params.hasOwnProperty("rfList")) {
                            for (let i = 0; i <= Object.keys(device.params.rfList).length; i++) {
                               platform.addAccessory(device, device.deviceid + "SW" + i, "bridge");
                            }
                         }
-                     } else { //*** NOT SUPPORTED ***//
+                     }
+                     //*** [ADD] NOT SUPPORTED ***//
+                     else {
                         platform.log.warn("[%s] could not be added as it is not supported by this plugin.", device.name);
                      }
                   }
-                  // Refresh existing devices and also those that have just been added.
+                  //*** REFRESH DEVICES ***//
                   if (platform.devicesInHB.has(device.deviceid + "SWX")) {
                      accessory = platform.devicesInHB.get(device.deviceid + "SWX");
                      accessory.getService(Service.AccessoryInformation).setCharacteristic(Characteristic.FirmwareRevision, device.params.fwVersion);
@@ -231,8 +253,8 @@ class eWeLink {
                      let accessory;
                      if (device.action === "sysmsg") {
                         if (platform.devicesInHB.has(device.deviceid + "SWX")) {
+                           accessory = platform.devicesInHB.get(device.deviceid + "SWX");
                            try {
-                              accessory = platform.devicesInHB.get(device.deviceid + "SWX");
                               accessory.context.reachable = device.params.online;
                               platform.log("[%s] has been reported [%s].", accessory.displayName, accessory.context.reachable ? "online" : "offline");
                               platform.devicesInHB.set(accessory.context.hbDeviceId, accessory);
@@ -241,6 +263,7 @@ class eWeLink {
                               platform.log.warn("[%s] new status could not be updated - [%s].", accessory.displayName, e);
                            }
                         } else if (platform.devicesInHB.has(device.deviceid + "SW0")) {
+                           accessory = platform.devicesInHB.get(device.deviceid + "SW0");
                            let otherAccessory;
                            for (let i = 0; i <= accessory.context.channelCount; i++) {
                               try {
@@ -286,7 +309,7 @@ class eWeLink {
                };
                platform.log("Plugin initialisation has been successful.");
             }
-         }; // end afterlogin function
+         };
          platform.httpClient = new eWeLinkHTTP(platform.config, platform.log, platform.debug);
          platform.httpClient.getHost().then((res) => {
             platform.apiHost = res;
@@ -355,7 +378,7 @@ class eWeLink {
             type: service
          };
          switch (service) {
-         case "blind":
+         case "cusBlind":
             accessory.addService(Service.WindowCovering)
                .setCharacteristic(Characteristic.CurrentPosition, 0)
                .setCharacteristic(Characteristic.TargetPosition, 0)
@@ -376,7 +399,7 @@ class eWeLink {
                }
             };
             break;
-         case "garageDoor":
+         case "cusGarage":
             accessory.addService(Service.GarageDoorOpener)
                .setCharacteristic(Characteristic.CurrentDoorState, 1)
                .setCharacteristic(Characteristic.TargetDoorState, 1)
@@ -434,16 +457,16 @@ class eWeLink {
       }
       try {
          switch (accessory.context.type) {
-         case "blind":
+         case "cusBlind":
             accessory.getService(Service.WindowCovering).getCharacteristic(Characteristic.TargetPosition)
                .on("set", function (value, callback) {
                   platform.internalBlindUpdate(accessory, value, callback);
                });
             break;
-         case "garageDoor":
+         case "cusGarage":
             accessory.getService(Service.GarageDoorOpener).getCharacteristic(Characteristic.TargetDoorState)
                .on("set", function (value, callback) {
-                  platform.internalGarageDoorUpdate(accessory, value, callback);
+                  platform.internalGarageUpdate(accessory, value, callback);
                });
             break;
          case "fan":
@@ -552,15 +575,15 @@ class eWeLink {
    }
    refreshAccessory(accessory, newParams) {
       switch (accessory.context.type) {
-      case "blind":
+      case "cusBlind":
          if (Array.isArray(newParams.switches)) {
             platform.externalBlindUpdate(accessory, newParams);
             return true;
          }
          break;
-      case "garageDoor":
+      case "cusGarage":
          if (newParams.hasOwnProperty("switch") || newParams.hasOwnProperty("pulse")) {
-            platform.externalGarageDoorUpdate(accessory, newParams);
+            platform.externalGarageUpdate(accessory, newParams);
             return true;
          }
          break;
@@ -797,7 +820,7 @@ class eWeLink {
       }, 100);
       callback();
    }
-   internalGarageDoorUpdate(accessory, value, callback) {
+   internalGarageUpdate(accessory, value, callback) {
       if (!accessory.context.reachable) {
          platform.log.warn("[%s] could not be updated as it is currently offline.", accessory.displayName);
          callback("Device offline.");
@@ -1216,7 +1239,7 @@ class eWeLink {
             .updateCharacteristic(Characteristic.PositionState, 2);
       }
    }
-   externalGarageDoorUpdate(accessory, params) {
+   externalGarageUpdate(accessory, params) {
       if (platform.debug) {
          platform.log("[%s] will be refreshed.", accessory.displayName);
       }
