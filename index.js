@@ -1338,9 +1338,8 @@ class eWeLink {
          platform.log("[%s] will be refreshed.", accessory.displayName);
       }
       let idToCheck = accessory.context.hbDeviceId.slice(0, -1);
-      let i;
       let primaryState = false;
-      for (i = 1; i <= accessory.context.channelCount; i++) {
+      for (let i = 1; i <= accessory.context.channelCount; i++) {
          if (platform.devicesInHB.has(idToCheck + i)) {
             let otherAccessory = platform.devicesInHB.get(idToCheck + i);
             otherAccessory.getService(Service.Lightbulb).updateCharacteristic(Characteristic.On, params.switches[i - 1].switch === "on");
@@ -1348,8 +1347,8 @@ class eWeLink {
                primaryState = true;
             }
          }
-         accessory.getService(Service.Lightbulb).updateCharacteristic(Characteristic.On, primaryState);
       }
+      accessory.getService(Service.Lightbulb).updateCharacteristic(Characteristic.On, primaryState);
    }
    externalSingleSwitchUpdate(accessory, params) {
       if (platform.debug) {
@@ -1371,8 +1370,8 @@ class eWeLink {
                primaryState = true;
             }
          }
-         accessory.getService(Service.Switch).updateCharacteristic(Characteristic.On, primaryState);
       }
+      accessory.getService(Service.Switch).updateCharacteristic(Characteristic.On, primaryState);
    }
    externalBridgeUpdate(accessory, params) {
       if (platform.debug) {
@@ -1396,8 +1395,8 @@ class eWeLink {
                }
             }
          }
-         accessory.getService(Service.MotionSensor).updateCharacteristic(Characteristic.MotionDetected, master);
       }
+      accessory.getService(Service.MotionSensor).updateCharacteristic(Characteristic.MotionDetected, master);
       setTimeout(() => {
          for (let i = 0; i <= accessory.context.channelCount; i++) {
             if (platform.devicesInHB.has(idToCheck + i)) {
