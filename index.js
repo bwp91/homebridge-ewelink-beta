@@ -104,10 +104,10 @@ class eWeLink {
                         // platform.log.hooray("Plugin initialisation has been successful."); //
                         platform.log("Plugin initialisation has been successful.");
                      })();
-                  });
-               });
-            });
-         });
+                  }).catch(e => platform.log.error(e));
+               }).catch(e => platform.log.error(e));
+            }).catch(e => platform.log.error(e));
+         }).catch(e => platform.log.error(e));
       }.bind(platform));
    }
    addOrRefreshDevice(device) {
