@@ -37,18 +37,32 @@ class eWeLink {
       platform.devicesInEwe = new Map();
       platform.customGroup = new Map();
       platform.api.on("didFinishLaunching", function () {
+         //*************************************//
+         // FIRST WE SET UP THE HTTP API CLIENT //
          platform.httpClient = new eWeLinkHTTP(platform.config, platform.log, platform.debug);
+         //************************************************//
+         // GET THE REGION ASSIGNED TO THE EWELINK ACCOUNT //
          platform.httpClient.getHost().then(res => {
             platform.apiHost = res;
+            //************************************//
+            // USE THE REGION TO LOG INTO EWELINK //
             platform.httpClient.login().then(res => {
                platform.apiKey = res.apiKey;
                platform.aToken = res.aToken;
+               //**************************************//
+               // THEN WE SET UP THE WEB SOCKET CLIENT //
                platform.wsClient = new eWeLinkWS(platform.log, platform.apiHost, platform.aToken, platform.apiKey, platform.debug);
+               //***********************************//
+               // GET THE WEB SOCKET HOST BY REGION //
                platform.wsClient.getHost().then(res => {
                   platform.wsHost = res;
                   platform.wsClient.login();
+                  //************************************//
+                  // REQUEST A DEVICE LIST VIA HTTP API //
                   platform.httpClient.getDevices().then(res => {
                      platform.httpDevices = res;
+                     //************************************//
+                     // USE THE DEVICE LIST TO REFRESH HOMEBRIDGE //
                      (function () {
                         //**************************************************************//
                         // REMOVE ALL HOMEBRIDGE ACCESSORIES IF NONE IN EWELINK ACCOUNT //
@@ -86,6 +100,8 @@ class eWeLink {
                               }
                            });
                         }
+                        //******************************************************//
+                        // NO DEVICES IN EWELINK MEANS NO REASON TO LOAD PLUGIN //
                         if (platform.devicesInEwe.size === 0) {
                            return;
                         }
