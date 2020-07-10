@@ -143,7 +143,7 @@ class eWeLink {
       if (!platform.devicesInHB.has(device.deviceid + "SWX") && !platform.devicesInHB.has(device.deviceid + "SW0")) {
          if (platform.customGroup.has(device.deviceid + "SWX")) {
             //*** [ADD] BLINDS ***//
-            if (platform.customGroup.get(device.deviceid) + "SWX".type === "cusBlind" && Array.isArray(device.params.switches)) {
+            if (platform.customGroup.get(device.deviceid + "SWX").type === "cusBlind" && Array.isArray(device.params.switches)) {
                platform.addAccessory(device, device.deviceid + "SWX", "cusBlind");
             }
             //*** [ADD] GARAGES ***//
