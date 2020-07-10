@@ -596,11 +596,8 @@ class eWeLink {
          }
          break;
       case "bridge":
-         if (Array.isArray(newParams)) {
-            platform.externalBridgeUpdate(accessory, newParams);
-            return true;
-         }
-         break;
+         platform.externalBridgeUpdate(accessory, newParams);
+         return true;
       default:
          return false;
       }
