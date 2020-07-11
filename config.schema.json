@@ -37,6 +37,12 @@
             "description":"If enabled, more information will be added to the Homebridge log.",
             "default":false
          },
+         "hideFromHB":{
+            "type":"string",
+            "title":"Hide Devices",
+            "description":"A list of eWeLink channels to hide from Homebridge. For example '10009553c9SW1' or multiple devices separated with a comma '10009553c9SW1,10009553c9SW2'.",
+            "default":""
+         },
          "sensorTimeLength":{
             "type":"integer",
             "title":"Motion Sensor Length",
@@ -220,6 +226,7 @@
          "expandable":true,
          "items":[
             "debug",
+            "hideFromHB",
             "sensorTimeLength",
             "sensorTimeDifference"
          ]
