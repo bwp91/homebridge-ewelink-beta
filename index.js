@@ -27,7 +27,8 @@ class eWeLink {
       platform.config = config;
       platform.api = api;
       platform.debug = platform.config.debug || false;
-      platform.customHideFromHB = platform.config.hideFromHB || "";
+      platform.customHideChanFromHB = platform.config.hideFromHB || "";
+      platform.customHideDvceFromHB = platform.config.hideDevFromHB || "";
       platform.sensorTimeLength = platform.config.sensorTimeLength || 2;
       platform.sensorTimeDifference = platform.config.sensorTimeDifference || 120;
       platform.devicesInHB = new Map();
@@ -65,9 +66,10 @@ class eWeLink {
                   }
                   //*** MAKE A MAP OF COMPATIBLE DEVICES FROM EWELINK ***\\
                   platform.httpDevices.forEach(device => {
-                     if (device.type === "10") {
-                        platform.devicesInEwe.set(device.deviceid, device);
+                     if (device.type !== "10" || platform.customHideDvceFromHB.includes(device.deviceid)) {
+                        return;
                      }
+                     platform.devicesInEwe.set(device.deviceid, device);
                   });
                   //*** MAKE A MAP OF CUSTOM GROUPS FROM THE HOMEBRIDGE CONFIG ***\\
                   if (platform.config.groups && Object.keys(platform.config.groups).length > 0) {
@@ -217,14 +219,14 @@ class eWeLink {
             let otherAccessory;
             try {
                if (!platform.devicesInHB.has(device.deviceid + "SW" + i)) {
-                  if ([1, 2, 3, 4].includes(i) && platform.customHideFromHB.includes(device.deviceid + "SW" + i) && accessory.context.type === "switch") {
+                  if ([1, 2, 3, 4].includes(i) && platform.customHideChanFromHB.includes(device.deviceid + "SW" + i) && accessory.context.type === "switch") {
                      continue;
                   } else {
                      platform.addAccessory(device, device.deviceid + "SW" + i, "switch");
                   }
                }
                otherAccessory = platform.devicesInHB.get(device.deviceid + "SW" + i);
-               if ([1, 2, 3, 4].includes(i) && platform.customHideFromHB.includes(device.deviceid + "SW" + i) && accessory.context.type === "switch") {
+               if ([1, 2, 3, 4].includes(i) && platform.customHideChanFromHB.includes(device.deviceid + "SW" + i) && accessory.context.type === "switch") {
                   platform.removeAccessory(otherAccessory);
                   continue;
                }
@@ -252,7 +254,7 @@ class eWeLink {
       let newDeviceName = device.name;
       if (["1", "2", "3", "4"].includes(switchNumber)) {
          newDeviceName += " SW" + switchNumber;
-         if (platform.customHideFromHB.includes(hbDeviceId) && service === "switch") {
+         if (platform.customHideChanFromHB.includes(hbDeviceId) && service === "switch") {
             platform.log.warn("[%s] has not been added as per user configuration", newDeviceName);
             return;
          }
@@ -536,6 +538,8 @@ class eWeLink {
             } else {
                platform.log.error("[%s] will not be refreshed due to missing type parameter.\nPlease remove [%s] from the Homebridge cache (including any secondary devices (SW1, SW2, etc.).", accessory.displayName, accessory.displayName);
             }
+         } else if (platform.customHideDvceFromHB.includes(device.deviceid)) {
+            platform.log.warn("[%s] Accessory received via web socket has been hidden from Homebridge as per use configuration.", device.deviceid);
          } else {
             platform.log.warn("[%s] Accessory received via web socket does not exist in Homebridge. If it's a new accessory please restart Homebridge so it is added.", device.deviceid);
          }
