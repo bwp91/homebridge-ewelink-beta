@@ -4,11 +4,7 @@ const constants = require('./lib/constants');
 const convert = require("color-convert");
 const eWeLinkHTTP = require('./lib/eWeLinkHTTP');
 const eWeLinkWS = require('./lib/eWeLinkWS');
-let Accessory;
-let Characteristic;
-let Service;
-let UUIDGen;
-let platform;
+let Accessory, Characteristic, Service, UUIDGen, platform;
 module.exports = function (homebridge) {
    Accessory = homebridge.platformAccessory;
    Service = homebridge.hap.Service;
@@ -31,11 +27,11 @@ class eWeLink {
       platform.config = config;
       platform.api = api;
       platform.debug = platform.config.debug || false;
+      platform.customHideFromHB = platform.config.hideFromHB || "";
       platform.sensorTimeLength = platform.config.sensorTimeLength || 2;
       platform.sensorTimeDifference = platform.config.sensorTimeDifference || 120;
       platform.devicesInHB = new Map();
       platform.devicesInEwe = new Map();
-      platform.customHideFromHB = platform.config.hideFromHB || "";
       platform.customGroups = new Map();
       platform.customBridgeSensors = new Map();
       platform.api.on("didFinishLaunching", function () {
@@ -665,8 +661,7 @@ class eWeLink {
    }
    internalBlindUpdate(accessory, value, callback) {
       if (!accessory.context.reachable) {
-         platform.log.warn("[%s] could not be updated as it is currently offline.", accessory.displayName);
-         callback("Device offline.");
+         callback(accessory.displayName + " could not be updated as it is currently offline.");
          return;
       }
       if (platform.debug) {
@@ -838,8 +833,7 @@ class eWeLink {
    }
    internalGarageUpdate(accessory, value, callback) {
       if (!accessory.context.reachable) {
-         platform.log.warn("[%s] could not be updated as it is currently offline.", accessory.displayName);
-         callback("Device offline.");
+         callback(accessory.displayName + " could not be updated as it is currently offline.");
          return;
       }
       let payload = {
@@ -873,13 +867,10 @@ class eWeLink {
    }
    internalFanUpdate(accessory, type, value, callback) {
       if (!accessory.context.reachable) {
-         platform.log.warn("[%s] could not be updated as it is currently offline.", accessory.displayName);
-         callback("Device offline.");
+         callback(accessory.displayName + " could not be updated as it is currently offline.");
          return;
       }
-      let newPower;
-      let newSpeed;
-      let newLight;
+      let newPower, newSpeed, newLight;
       switch (type) {
       case "power":
          newPower = value;
@@ -900,9 +891,10 @@ class eWeLink {
       let payload = {
          apikey: accessory.context.eweApiKey,
          deviceid: accessory.context.eweDeviceId,
-         params: {}
+         params: {
+            switches: platform.devicesInEwe.get(accessory.context.eweDeviceId).params.switches,
+         }
       };
-      payload.params.switches = platform.devicesInEwe.get(accessory.context.eweDeviceId).params.switches;
       payload.params.switches[0].switch = newLight ? "on" : "off";
       payload.params.switches[1].switch = newSpeed >= 33 ? "on" : "off";
       payload.params.switches[2].switch = newSpeed >= 66 && newSpeed < 99 ? "on" : "off";
@@ -918,8 +910,7 @@ class eWeLink {
    }
    internalThermostatUpdate(accessory, value, callback) {
       if (!accessory.context.reachable) {
-         platform.log.warn("[%s] could not be updated as it is currently offline.", accessory.displayName);
-         callback("Device offline.");
+         callback(accessory.displayName + " could not be updated as it is currently offline.");
          return;
       }
       let payload = {
@@ -957,8 +948,7 @@ class eWeLink {
    }
    internalLightbulbUpdate(accessory, value, callback) {
       if (!accessory.context.reachable) {
-         platform.log.warn("[%s] could not be updated as it is currently offline.", accessory.displayName);
-         callback("Device offline.");
+         callback(accessory.displayName + " could not be updated as it is currently offline.");
          return;
       }
       let otherAccessory;
@@ -1027,8 +1017,7 @@ class eWeLink {
    }
    internalBrightnessUpdate(accessory, value, callback) {
       if (!accessory.context.reachable) {
-         platform.log.warn("[%s] could not be updated as it is currently offline.", accessory.displayName);
-         callback("Device offline.");
+         callback(accessory.displayName + " could not be updated as it is currently offline.");
          return;
       }
       let payload = {
@@ -1063,12 +1052,10 @@ class eWeLink {
    }
    internalHSBUpdate(accessory, type, value, callback) {
       if (!accessory.context.reachable) {
-         platform.log.warn("[%s] could not be updated as it is currently offline.", accessory.displayName);
-         callback("Device offline.");
+         callback(accessory.displayName + " could not be updated as it is currently offline.");
          return;
       }
-      let newRGB;
-      let params;
+      let newRGB, params;
       let curHue = accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.Hue).value;
       let curSat = accessory.getService(Service.Lightbulb).getCharacteristic(Characteristic.Saturation).value;
       if (type === "hue") {
@@ -1129,8 +1116,7 @@ class eWeLink {
    }
    internalSwitchUpdate(accessory, value, callback) {
       if (!accessory.context.reachable) {
-         platform.log.warn("[%s] could not be updated as it is currently offline.", accessory.displayName);
-         callback("Device offline.");
+         callback(accessory.displayName + " could not be updated as it is currently offline.");
          return;
       }
       let payload = {
@@ -1326,8 +1312,7 @@ class eWeLink {
       if (platform.debug) {
          platform.log("[%s] will be refreshed.", accessory.displayName);
       }
-      let newColour;
-      let mode;
+      let newColour, mode;
       let isOn = false;
       if ((accessory.context.eweUIID === 22) && params.hasOwnProperty("state")) {
          isOn = params.state === "on";
