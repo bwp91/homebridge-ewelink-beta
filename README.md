@@ -1,7 +1,7 @@
 # homebridge-ewelink-beta
-This is a **beta** channel for my [homebridge-ewelink-sonoff](https://github.com/thepotterfamily/homebridge-ewelink-sonoff) package. So if you are looking for a more stable version then I would recommend installing [homebridge-ewelink-sonoff](https://github.com/thepotterfamily/homebridge-ewelink-sonoff) instead.
+This is a **beta** channel for my [homebridge-ewelink-sonoff](https://github.com/bwp91/homebridge-ewelink-sonoff) package. So if you are looking for a more stable version then I would recommend installing [homebridge-ewelink-sonoff](https://github.com/bwp91/homebridge-ewelink-sonoff) instead.
 
-This package is for new features and code changes that need testing before they are rolled out into the main [homebridge-ewelink-sonoff](https://github.com/thepotterfamily/homebridge-ewelink-sonoff) package.
+This package is for new features and code changes that need testing before they are rolled out into the main [homebridge-ewelink-sonoff](https://github.com/bwp91/homebridge-ewelink-sonoff) package.
 
 Being a beta package, it could very well cause errors to the point of your Homebridge instance being unable to start.
 
@@ -13,7 +13,7 @@ To change to the beta version:
 sudo npm uninstall homebridge-ewelink-sonoff -g
 sudo npm install homebridge-ewelink-beta -g
 ```
-#### Stable Version ([homebridge-ewelink-sonoff](https://github.com/thepotterfamily/homebridge-ewelink-sonoff))
+#### Stable Version ([homebridge-ewelink-sonoff](https://github.com/bwp91/homebridge-ewelink-sonoff))
 To change to the stable version:
 ```bash
 sudo npm uninstall homebridge-ewelink-beta -g
