@@ -1,4 +1,12 @@
-# homebridge-ewelink-beta
+<div align="center">
+<h1>homebridge-ewelink-beta</h1>   
+    
+[![npm](https://img.shields.io/npm/dt/homebridge-ewelink-beta)](https://www.npmjs.com/package/homebridge-ewelink-sonoff)   
+[![npm](https://img.shields.io/npm/v/homebridge-ewelink-sonoff?label=release)](https://www.npmjs.com/package/homebridge-ewelink-sonoff)
+[![npm](https://img.shields.io/npm/v/homebridge-ewelink-beta?label=beta)](https://www.npmjs.com/package/homebridge-ewelink-beta)
+</div>
+
+
 This is a **beta** channel for my [homebridge-ewelink-sonoff](https://github.com/bwp91/homebridge-ewelink-sonoff) package. So if you are looking for a more stable version then I would recommend installing [homebridge-ewelink-sonoff](https://github.com/bwp91/homebridge-ewelink-sonoff) instead.
 
 This package is for new features and code changes that need testing before they are rolled out into the main [homebridge-ewelink-sonoff](https://github.com/bwp91/homebridge-ewelink-sonoff) package.
