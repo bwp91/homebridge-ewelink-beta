@@ -27,6 +27,7 @@ class eWeLink {
       platform.config = config;
       platform.api = api;
       platform.debug = platform.config.debug || false;
+      platform.redactLogs = platform.config.redactLogs || true;
       platform.customHideChanFromHB = platform.config.hideFromHB || "";
       platform.customHideDvceFromHB = platform.config.hideDevFromHB || "";
       platform.sensorTimeLength = platform.config.sensorTimeLength || 2;
@@ -37,7 +38,7 @@ class eWeLink {
       platform.customBridgeSensors = new Map();
       platform.api.on("didFinishLaunching", function () {
          //*** SET UP HTTP API CLIENT AND GET THE USER HTTP API HOST ***\\
-         platform.httpClient = new eWeLinkHTTP(platform.config, platform.log, platform.debug);
+         platform.httpClient = new eWeLinkHTTP(platform.config, platform.log, platform.debug, platform.redactLogs);
          platform.httpClient.getHost()
             .then(res => {
                //*** USE THE HTTP API HOST TO LOG INTO EWELINK ***\\
@@ -47,7 +48,7 @@ class eWeLink {
                //*** SET UP THE WEB SOCKET CLIENT ***\\
                platform.apiKey = res.apiKey;
                platform.aToken = res.aToken;
-               platform.wsClient = new eWeLinkWS(platform.log, platform.apiHost, platform.aToken, platform.apiKey, platform.debug);
+               platform.wsClient = new eWeLinkWS(platform.log, platform.apiHost, platform.aToken, platform.apiKey, platform.debug, platform.redactLogs);
                return platform.wsClient.getHost();
             }).then(res => {
                //*** USE THE WEB SOCKET HOST TO OPEN CONNECTION ***\\
