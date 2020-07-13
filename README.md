@@ -18,12 +18,12 @@ To switch between the different versions you can use Homebridge Config UI X to u
 #### Beta Version (homebridge-ewelink-beta)
 To change to the beta version:
 ```bash
-sudo npm uninstall homebridge-ewelink-sonoff -g
-sudo npm install homebridge-ewelink-beta -g
+$ sudo npm uninstall homebridge-ewelink-sonoff -g
+$ sudo npm install homebridge-ewelink-beta -g
 ```
 #### Stable Version ([homebridge-ewelink-sonoff](https://github.com/bwp91/homebridge-ewelink-sonoff))
 To change to the stable version:
 ```bash
-sudo npm uninstall homebridge-ewelink-beta -g
-sudo npm install homebridge-ewelink-sonoff -g
+$ sudo npm uninstall homebridge-ewelink-beta -g
+$ sudo npm install homebridge-ewelink-sonoff -g
 ```
