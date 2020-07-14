@@ -102,95 +102,11 @@
                      "title":"Device ID",
                      "description":"Device ID from your eWeLink app (ten digits normally in the format 1000******)."
                   },
-                  "switchUp":{
-                     "type":"number",
-                     "title":"Switch Up",
-                     "default":1,
-                     "required":true,
-                     "description":"Switch number for the up motor.",
-                     "oneOf":[
-                        {
-                           "title":"1",
-                           "enum":[
-                              1
-                           ]
-                        },
-                        {
-                           "title":"2",
-                           "enum":[
-                              2
-                           ]
-                        },
-                        {
-                           "title":"3",
-                           "enum":[
-                              3
-                           ]
-                        },
-                        {
-                           "title":"4",
-                           "enum":[
-                              4
-                           ]
-                        }
-                     ]
-                  },
-                  "switchDown":{
-                     "type":"number",
-                     "title":"Switch Down",
-                     "default":2,
-                     "required":true,
-                     "description":"Switch number for the down motor.",
-                     "oneOf":[
-                        {
-                           "title":"1",
-                           "enum":[
-                              1
-                           ]
-                        },
-                        {
-                           "title":"2",
-                           "enum":[
-                              2
-                           ]
-                        },
-                        {
-                           "title":"3",
-                           "enum":[
-                              3
-                           ]
-                        },
-                        {
-                           "title":"4",
-                           "enum":[
-                              4
-                           ]
-                        }
-                     ]
-                  },
-                  "timeUp":{
+                  "operationTime":{
                      "type":"number",
                      "title":"Time Up",
-                     "description":"Total time in seconds to fully open blinds (from closed).",
-                     "default":20
-                  },
-                  "timeDown":{
-                     "type":"number",
-                     "title":"Time Down",
-                     "description":"Total time in seconds to completely close blinds (from open).",
-                     "default":40
-                  },
-                  "timeBottomMarginUp":{
-                     "type":"number",
-                     "title":"Time Bottom Margin Up",
-                     "description":"Please refer <a href=\"https://github.com/manolab/homebridge-sonoff-stateful-blinds#readme\" target=\"_blank\">to this link</a> for more information about this setting.",
-                     "default":0
-                  },
-                  "timeBottomMarginDown":{
-                     "type":"number",
-                     "title":"Time Bottom Margin Down",
-                     "description":"Please refer <a href=\"https://github.com/manolab/homebridge-sonoff-stateful-blinds#readme\" target=\"_blank\">to this link</a> for more information about this setting.",
-                     "default":0
+                     "description":"Total time in seconds to fully open/close blinds.",
+                     "default":10
                   }
                }
             }
@@ -222,12 +138,7 @@
                "items":[
                   "groups[].type",
                   "groups[].deviceId",
-                  "groups[].switchUp",
-                  "groups[].switchDown",
-                  "groups[].timeUp",
-                  "groups[].timeDown",
-                  "groups[].timeBottomMarginUp",
-                  "groups[].timeBottomMarginUp"
+                  "groups[].operationTime"
                ]
             }
          ]
