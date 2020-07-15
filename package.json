@@ -1,47 +1,47 @@
 {
-  "name": "homebridge-ewelink-beta",
-  "version": "2.5.4",
-  "author": "bwp91",
-  "contributors": [
-    "gbro115",
-    "MrTomAsh",
-    "howanghk",
-    "LeJeko",
-    "aremishevsky-chegg",
-    "samkni",
-    "robsonfj",
-    "ramsesz",
-    "metarutaiga",
-    "janbuecker",
-    "jacopofranza",
-    "donavanbecker",
-    "dhutchison",
-    "danielk117",
-    "bassrock",
-    "VictorKrasnov",
-    "JuniorGenius",
-    "BobbySlope"
-  ],
-  "description": "homebridge-ewelink-beta is a Homebrige plugin to control Sonoff devices running OEM firmware.",
-  "license": "MIT",
-  "keywords": [
-    "homebridge",
-    "homebridge-plugin",
-    "sonoff",
-    "ewelink"
-  ],
-  "engines": {
-    "node": ">=6.0.0",
-    "homebridge": ">=0.2.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bwp91/homebridge-ewelink-beta"
-  },
-  "dependencies": {
-    "axios": "^0.19.2",
-    "color-convert": "^2.0.1",
-    "nonce": "^1.0.4",
-    "ws": "^7.3.0"
-  }
+   "name": "homebridge-ewelink-beta",
+   "version": "2.5.4",
+   "author": "bwp91",
+   "contributors": [
+      "gbro115",
+      "MrTomAsh",
+      "howanghk",
+      "LeJeko",
+      "aremishevsky-chegg",
+      "samkni",
+      "robsonfj",
+      "ramsesz",
+      "metarutaiga",
+      "janbuecker",
+      "jacopofranza",
+      "donavanbecker",
+      "dhutchison",
+      "danielk117",
+      "bassrock",
+      "VictorKrasnov",
+      "JuniorGenius",
+      "BobbySlope"
+   ],
+   "description": "homebridge-ewelink-beta is a Homebrige plugin to control Sonoff devices running OEM firmware.",
+   "license": "MIT",
+   "keywords": [
+      "homebridge",
+      "homebridge-plugin",
+      "sonoff",
+      "ewelink"
+   ],
+   "engines": {
+      "node": ">=6.0.0",
+      "homebridge": ">=0.2.0"
+   },
+   "repository": {
+      "type": "git",
+      "url": "https://github.com/bwp91/homebridge-ewelink-beta"
+   },
+   "dependencies": {
+      "axios": "0.19.2",
+      "color-convert": "2.0.1",
+      "nonce": "1.0.4",
+      "ws": "7.3.1"
+   }
 }
