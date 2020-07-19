@@ -80,6 +80,7 @@
                   "type":{
                      "type":"string",
                      "title":"Type",
+                     "required":true,
                      "default":"null",
                      "description":"A description of this group.",
                      "oneOf":[
@@ -100,13 +101,42 @@
                   "deviceId":{
                      "type":"string",
                      "title":"Device ID",
+                     "required":true,
                      "description":"Device ID from your eWeLink app (ten digits normally in the format 1000******)."
+                  },
+                  "setup":{
+                     "type":"string",
+                     "title":"Device Setup",
+                     "default":"null",
+                     "description":"The device setup.",
+                     "required":true,
+                     "oneOf":[
+                        {
+                           "title":"One switch for on/off",
+                           "enum":[
+                              "oneSwitch"
+                           ]
+                        }
+                     ]
                   },
                   "operationTime":{
                      "type":"number",
-                     "title":"Time Up",
-                     "description":"Total time in seconds to fully open/close blinds.",
-                     "default":10
+                     "title":"Operation Time",
+                     "required":true,
+                     "description":"Total time in deciseconds to fully open/close the blind/door. Count the time in seconds and multiply by 10, for example 100 for 10 seconds or 75 for 7.5 seconds.",
+                     "default":100
+                  },
+                  "inched":{
+                     "title":"Device Inching",
+                     "type":"boolean",
+                     "required":true,
+                     "description":"If device inching is already setup in your eWeLink account then set this to true. Otherwise this plugin will send an 'off' command after half a second to mimic the inching behaviour.",
+                     "default":true
+                  },
+                  "sensorFullId":{
+                     "type":"string",
+                     "title":"Optional Sensor",
+                     "description":"If you have a Sonoff sensor that can determine the current open/closed state of this device then please enter the full device ID including the SW* part. Otherwise leave this blank."
                   }
                }
             }
@@ -138,7 +168,10 @@
                "items":[
                   "groups[].type",
                   "groups[].deviceId",
-                  "groups[].operationTime"
+                  "groups[].setup",
+                  "groups[].operationTime",
+                  "groups[].inched",
+                  "groups[].sensorFullId"
                ]
             }
          ]
