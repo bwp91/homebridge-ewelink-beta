@@ -140,6 +140,78 @@
                   }
                }
             }
+         },
+         "bridgeSensors":{
+            "type":"array",
+            "title":"Sensors",
+            "description":"You can expose different types of sensors connected to your RF Bridge in HomeKit.",
+            "items":{
+               "type":"object",
+               "properties":{
+                  "deviceId":{
+                     "type":"string",
+                     "title":"RF Bridge Device ID",
+                     "required":true,
+                     "description":"Device ID of your RF Bridge from your eWeLink app (10 digits normally in the format 1000******)."
+                  },
+                  "fullDeviceId":{
+                     "type":"string",
+                     "title":"Sensor Device ID",
+                     "description":"Device ID of the sensor from Homebridge (13 digits normally in the format 1000******SW*)."
+                  },
+                  "type":{
+                     "type":"string",
+                     "title":"Sensor Type",
+                     "default":"motion",
+                     "description":"Select the type of sensor you would like to expose this as in Homebridge.",
+                     "required":true,
+                     "oneOf":[
+                        {
+                           "title":"Motion",
+                           "enum":[
+                              "motion"
+                           ]
+                        },
+                        {
+                           "title":"Smoke/Fire",
+                           "enum":[
+                              "smoke"
+                           ]
+                        },
+                        {
+                           "title":"Water/Leak",
+                           "enum":[
+                              "water"
+                           ]
+                        },
+                        {
+                           "title":"Carbon Monoxide",
+                           "enum":[
+                              "co"
+                           ]
+                        },
+                        {
+                           "title":"Carbon Dioxide",
+                           "enum":[
+                              "co2"
+                           ]
+                        },
+                        {
+                           "title":"Occupancy",
+                           "enum":[
+                              "occupancy"
+                           ]
+                        },
+                        {
+                           "title":"Contact",
+                           "enum":[
+                              "contact"
+                           ]
+                        }
+                     ]
+                  }
+               }
+            }
          }
       },
       "required":[
@@ -158,8 +230,23 @@
          ]
       },
       {
+         "type":"fieldset",
+         "title":"Optional",
+         "description":"Only adjust these settings if you know what you are doing.",
+         "expandable":true,
+         "items":[
+            "debug",
+            "redactLogs",
+            "hideDevFromHB",
+            "hideFromHB",
+            "sensorTimeLength",
+            "sensorTimeDifference"
+         ]
+      },
+      {
          "key":"groups",
          "expandable":true,
+         "title":"Groups",
          "add":"Add Another Group",
          "type":"array",
          "items":[
@@ -177,17 +264,20 @@
          ]
       },
       {
-         "type":"fieldset",
-         "title":"Optional",
-         "description":"Only adjust these settings if you know what you are doing.",
+         "key":"bridgeSensors",
+         "title":"Sensors",
          "expandable":true,
+         "add":"Add Another Sensor",
+         "type":"array",
          "items":[
-            "debug",
-            "redactLogs",
-            "hideDevFromHB",
-            "hideFromHB",
-            "sensorTimeLength",
-            "sensorTimeDifference"
+            {
+               "type":"fieldset",
+               "items":[
+                  "bridgeSensors[].deviceId",
+                  "bridgeSensors[].fullDeviceId",
+                  "bridgeSensors[].type"
+               ]
+            }
          ]
       }
    ]
