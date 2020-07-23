@@ -73,7 +73,7 @@
          "groups": {
             "type": "array",
             "title": "Groups",
-            "description": "You can group channels of multi-switch devices to simulate another HomeKit accessory instead of having each switch separately. Currently only blinds and garage doors are supported.",
+            "description": "You can group channels of Sonoff devices to simulate another HomeKit accessory instead of having each switch separately. Currently only blinds and garage doors are supported.",
             "items": {
                "type": "object",
                "properties": {
@@ -130,10 +130,10 @@
                      "description": "If device inching is already setup in your eWeLink account then set this to true. Otherwise this plugin will send an 'off' command after half a second to mimic the inching behaviour.",
                      "default": true
                   },
-                  "sensorFullId": {
+                  "sensorId": {
                      "type": "string",
                      "title": "Optional Sensor",
-                     "description": "If you have a Sonoff sensor that can determine the current open/closed state of this device then please enter the full device ID including the SW* part. Otherwise leave this blank."
+                     "description": "If you have a Sonoff sensor that can determine the current open/closed state of this device then please enter the 10 digit device ID. Otherwise leave this blank."
                   }
                }
             }
@@ -252,7 +252,7 @@
                "groups[].setup",
                "groups[].operationTime",
                "groups[].inched",
-               "groups[].sensorFullId"
+               "groups[].sensorId"
             ]
          }]
       },
