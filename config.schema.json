@@ -57,13 +57,6 @@
             "description": "If enabled, more information will be added to the Homebridge log.",
             "default": false
          },
-         "redactLogs": {
-            "title": "Log Redaction",
-            "type": "boolean",
-            "required": true,
-            "description": "If enabled, sensitive information will be hidden from the log. Note this is not a guarantee that everything will be redacted.",
-            "default": true
-         },
          "hideDevFromHB": {
             "type": "string",
             "title": "Hide Devices",
@@ -252,7 +245,6 @@
          "items": [
             "mode",
             "debug",
-            "redactLogs",
             "hideDevFromHB",
             "hideFromHB",
             "sensorTimeLength",
