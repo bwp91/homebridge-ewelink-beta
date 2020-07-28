@@ -41,7 +41,6 @@
    "dependencies": {
       "axios": "0.19.2",
       "color-convert": "2.0.1",
-      "dns-js": "0.2.1",
       "node-dns-sd": "0.4.1",
       "nonce": "1.0.4",
       "ws": "7.3.1"
