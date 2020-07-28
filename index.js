@@ -2,5 +2,5 @@
 "use strict";
 module.exports = function (homebridge) {
    let eWeLink = require("./lib/eWeLink.js")(homebridge);
-   homebridge.registerPlatform("homebridge-ewelink-sonoff", "eWeLink", eWeLink, true);
+   homebridge.registerPlatform("homebridge-ewelink-beta", "eWeLink", eWeLink, true);
 };
