@@ -123,9 +123,15 @@
                      "description": "The device setup.",
                      "required": true,
                      "oneOf": [{
-                        "title": "One switch for on/off",
+                        "title": "One Switch - for up and down",
                         "enum": [
                            "oneSwitch"
+                        ]
+                     },
+                     {
+                        "title": "Two Switches - one for up and one for down",
+                        "enum": [
+                           "twoSwitch"
                         ]
                      }]
                   },
@@ -145,8 +151,8 @@
                   },
                   "sensorId": {
                      "type": "string",
-                     "title": "Optional Sensor",
-                     "description": "If you have a Sonoff sensor that can determine the current open/closed state of this device then please enter the 10 digit device ID. Otherwise leave this blank."
+                     "title": "Sensor",
+                     "description": "A Sonoff DW2 sensor is required for a 'one switch' setup. This is to determine the current open/closed state of this device. Please enter the 10 digit device ID. Otherwise leave this blank."
                   }
                }
             }
