@@ -43,6 +43,7 @@
       "color-convert": "2.0.1",
       "node-dns-sd": "0.4.1",
       "nonce": "1.0.4",
+      "websocket-as-promised": "1.0.1",
       "ws": "7.3.1"
    }
 }
