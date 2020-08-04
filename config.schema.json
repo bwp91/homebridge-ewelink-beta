@@ -1,213 +1,247 @@
 {
-   "pluginAlias": "eWeLink",
-   "pluginType": "platform",
-   "singular": true,
-   "headerDisplay": "Homebridge plugin to control Sonoff devices with OEM firmware.",
-   "footerDisplay": "If you have any suggestions, please open an issue on [GitHub](https://github.com/bwp91/homebridge-ewelink-sonoff/issues).",
-   "schema": {
-      "type": "object",
-      "properties": {
-         "name": {
-            "type": "string",
-            "default": "eWeLink"
+   "pluginAlias":"eWeLink",
+   "pluginType":"platform",
+   "singular":true,
+   "headerDisplay":"Homebridge plugin to control Sonoff devices with OEM firmware.",
+   "footerDisplay":"If you have any suggestions, please open an issue on [GitHub](https://github.com/bwp91/homebridge-ewelink-sonoff/issues).",
+   "schema":{
+      "type":"object",
+      "properties":{
+         "name":{
+            "type":"string",
+            "default":"eWeLink"
          },
-         "countryCode": {
-            "type": "integer",
-            "title": "Country Code",
-            "description": "The telephone country code linked to your eWeLink account (without the +).",
-            "placeholder": "1",
-            "maximum": 999
+         "countryCode":{
+            "type":"integer",
+            "title":"Country Code",
+            "description":"The telephone country code linked to your eWeLink account (without the +).",
+            "placeholder":"1",
+            "maximum":999
          },
-         "username": {
-            "type": "string",
-            "title": "Username",
-            "description": "The phone number or email address linked to your eWeLink account.",
-            "placeholder": ""
+         "username":{
+            "type":"string",
+            "title":"Username",
+            "description":"The phone number or email address linked to your eWeLink account.",
+            "placeholder":""
          },
-         "password": {
-            "type": "string",
-            "title": "Password",
-            "placeholder": "",
-            "description": "The password for your eWeLink account."
+         "password":{
+            "type":"string",
+            "title":"Password",
+            "placeholder":"",
+            "description":"The password for your eWeLink account."
          },
-         "debug": {
-            "title": "Debug Logging",
-            "type": "boolean",
-            "required": true,
-            "description": "If enabled, more information will be added to the Homebridge log.",
-            "default": false
+         "debug":{
+            "title":"Debug Logging",
+            "type":"boolean",
+            "required":true,
+            "description":"If enabled, more information will be added to the Homebridge log.",
+            "default":false
          },
-         "debugReqRes": {
-            "title": "Request & Response Logging",
-            "type": "boolean",
-            "required": true,
-            "description": "If enabled, HTTP, web socket and LAN mode messages will be added to the log. Not recommended for long-term use.",
-            "default": false
+         "debugReqRes":{
+            "title":"Request & Response Logging",
+            "type":"boolean",
+            "required":true,
+            "description":"If enabled, HTTP, web socket and LAN mode messages will be added to the log. Not recommended for long-term use.",
+            "default":false
          },
-         "hideDevFromHB": {
-            "type": "string",
-            "title": "Hide Devices",
-            "description": "A list of eWeLink devices to hide from Homebridge. For example '10009553c8' or multiple devices separated with a comma '10009553c8,10009553c9'.",
-            "default": ""
+         "hideDevFromHB":{
+            "type":"string",
+            "title":"Hide Devices",
+            "description":"A list of eWeLink devices to hide from Homebridge. For example '10009553c8' or multiple devices separated with a comma '10009553c8,10009553c9'.",
+            "default":""
          },
-         "hideFromHB": {
-            "type": "string",
-            "title": "Hide Device Channels",
-            "description": "A list of device channels to hide from Homebridge. For example '10009553c8SW1' or multiple channels separated with a comma '10009553c8SW1,10009553c9SW2'.",
-            "default": ""
+         "hideFromHB":{
+            "type":"string",
+            "title":"Hide Device Channels",
+            "description":"A list of device channels to hide from Homebridge. For example '10009553c8SW1' or multiple channels separated with a comma '10009553c8SW1,10009553c9SW2'.",
+            "default":""
          },
-         "sensorTimeLength": {
-            "type": "integer",
-            "title": "Sensor Length",
-            "description": "The number of seconds which the sensor tile in the Home app will light up for if a sensor detects something.",
-            "default": "2",
-            "maximum": 999
+         "sensorTimeLength":{
+            "type":"integer",
+            "title":"Sensor Length",
+            "description":"The number of seconds which the sensor tile in the Home app will light up for if a sensor detects something.",
+            "default":"2",
+            "maximum":999
          },
-         "sensorTimeDifference": {
-            "type": "integer",
-            "title": "Sensor Lag",
-            "description": "An offset in seconds to ignore any notifications if they is a delay between a sensor detecting something and Homebridge receiving the notification.",
-            "default": "120",
-            "maximum": 999
+         "sensorTimeDifference":{
+            "type":"integer",
+            "title":"Sensor Lag",
+            "description":"An offset in seconds to ignore any notifications if they is a delay between a sensor detecting something and Homebridge receiving the notification.",
+            "default":"120",
+            "maximum":999
          },
-         "groups": {
-            "type": "array",
-            "title": "Groups",
-            "description": "You can group channels of Sonoff devices to simulate another HomeKit accessory instead of having each switch separately. Currently only blinds and garage doors are supported.",
-            "items": {
-               "type": "object",
-               "properties": {
-                  "type": {
-                     "type": "string",
-                     "title": "Type",
-                     "required": true,
-                     "default": "null",
-                     "description": "A description of this group.",
-                     "oneOf": [{
-                           "title": "Blind",
-                           "enum": [
+         "customDevices":{
+            "type":"array",
+            "title":"Custom Devices",
+            "description":"",
+            "items":{
+               "type":"object",
+               "properties":{
+                  "type":{
+                     "type":"string",
+                     "title":"Type",
+                     "required":true,
+                     "default":"null",
+                     "description":"A description of this group.",
+                     "oneOf":[
+                        {
+                           "title":"Irrigation Device",
+                           "enum":[
+                              "valve"
+                           ]
+                        }
+                     ]
+                  },
+                  "deviceId":{
+                     "type":"string",
+                     "title":"Device ID",
+                     "required":true,
+                     "description":"Device ID from your eWeLink app (ten digits normally in the format 1000******)."
+                  }
+               }
+            }
+         },
+         "groups":{
+            "type":"array",
+            "title":"Groups",
+            "description":"You can group channels of Sonoff devices to simulate another HomeKit accessory instead of having each switch separately. Currently only blinds and garage doors are supported.",
+            "items":{
+               "type":"object",
+               "properties":{
+                  "type":{
+                     "type":"string",
+                     "title":"Type",
+                     "required":true,
+                     "default":"null",
+                     "description":"A description of this group.",
+                     "oneOf":[
+                        {
+                           "title":"Blind",
+                           "enum":[
                               "blind"
                            ]
                         },
                         {
-                           "title": "Garage Door",
-                           "enum": [
+                           "title":"Garage Door",
+                           "enum":[
                               "garage"
                            ]
                         }
                      ]
                   },
-                  "deviceId": {
-                     "type": "string",
-                     "title": "Device ID",
-                     "required": true,
-                     "description": "Device ID from your eWeLink app (ten digits normally in the format 1000******)."
+                  "deviceId":{
+                     "type":"string",
+                     "title":"Device ID",
+                     "required":true,
+                     "description":"Device ID from your eWeLink app (ten digits normally in the format 1000******)."
                   },
-                  "setup": {
-                     "type": "string",
-                     "title": "Device Setup",
-                     "default": "null",
-                     "description": "The device setup.",
-                     "required": true,
-                     "oneOf": [{
-                           "title": "One Switch - for up and down",
-                           "enum": [
+                  "setup":{
+                     "type":"string",
+                     "title":"Device Setup",
+                     "default":"null",
+                     "description":"The device setup.",
+                     "required":true,
+                     "oneOf":[
+                        {
+                           "title":"One Switch - for up and down",
+                           "enum":[
                               "oneSwitch"
                            ]
                         },
                         {
-                           "title": "Two Switches - one for up and one for down",
-                           "enum": [
+                           "title":"Two Switches - one for up and one for down",
+                           "enum":[
                               "twoSwitch"
                            ]
                         }
                      ]
                   },
-                  "operationTime": {
-                     "type": "number",
-                     "title": "Operation Time",
-                     "required": true,
-                     "description": "Total time in deciseconds to fully open/close the blind/door. Count the time in seconds and multiply by 10, for example 100 for 10 seconds or 75 for 7.5 seconds.",
-                     "default": 100
+                  "operationTime":{
+                     "type":"number",
+                     "title":"Operation Time",
+                     "required":true,
+                     "description":"Total time in deciseconds to fully open/close the blind/door. Count the time in seconds and multiply by 10, for example 100 for 10 seconds or 75 for 7.5 seconds.",
+                     "default":100
                   },
-                  "inched": {
-                     "title": "Device Inching",
-                     "type": "boolean",
-                     "required": true,
-                     "description": "If device inching is already setup in your eWeLink account then set this to true. Otherwise this plugin will send an 'off' command after half a second to mimic the inching behaviour.",
-                     "default": true
+                  "inched":{
+                     "title":"Device Inching",
+                     "type":"boolean",
+                     "required":true,
+                     "description":"If device inching is already setup in your eWeLink account then set this to true. Otherwise this plugin will send an 'off' command after half a second to mimic the inching behaviour.",
+                     "default":true
                   },
-                  "sensorId": {
-                     "type": "string",
-                     "title": "Sensor",
-                     "description": "A Sonoff DW2 sensor is required for a 'one switch' setup. This is to determine the current open/closed state of this device. Please enter the 10 digit device ID. Otherwise leave this blank."
+                  "sensorId":{
+                     "type":"string",
+                     "title":"Sensor",
+                     "description":"A Sonoff DW2 sensor is required for a 'one switch' setup. This is to determine the current open/closed state of this device. Please enter the 10 digit device ID. Otherwise leave this blank."
                   }
                }
             }
          },
-         "bridgeSensors": {
-            "type": "array",
-            "title": "Sensors",
-            "description": "You can expose different types of sensors connected to your RF Bridge in HomeKit.",
-            "items": {
-               "type": "object",
-               "properties": {
-                  "deviceId": {
-                     "type": "string",
-                     "title": "RF Bridge Device ID",
-                     "required": true,
-                     "description": "Device ID of your RF Bridge from your eWeLink app (10 digits normally in the format 1000******)."
+         "bridgeSensors":{
+            "type":"array",
+            "title":"Sensors",
+            "description":"You can expose different types of sensors connected to your RF Bridge in HomeKit.",
+            "items":{
+               "type":"object",
+               "properties":{
+                  "deviceId":{
+                     "type":"string",
+                     "title":"RF Bridge Device ID",
+                     "required":true,
+                     "description":"Device ID of your RF Bridge from your eWeLink app (10 digits normally in the format 1000******)."
                   },
-                  "fullDeviceId": {
-                     "type": "string",
-                     "title": "Sensor Device ID",
-                     "description": "Device ID of the sensor from Homebridge (13 digits normally in the format 1000******SW*)."
+                  "fullDeviceId":{
+                     "type":"string",
+                     "title":"Sensor Device ID",
+                     "description":"Device ID of the sensor from Homebridge (13 digits normally in the format 1000******SW*)."
                   },
-                  "type": {
-                     "type": "string",
-                     "title": "Sensor Type",
-                     "default": "motion",
-                     "description": "Select the type of sensor you would like to expose this as in Homebridge.",
-                     "required": true,
-                     "oneOf": [{
-                           "title": "Motion",
-                           "enum": [
+                  "type":{
+                     "type":"string",
+                     "title":"Sensor Type",
+                     "default":"motion",
+                     "description":"Select the type of sensor you would like to expose this as in Homebridge.",
+                     "required":true,
+                     "oneOf":[
+                        {
+                           "title":"Motion",
+                           "enum":[
                               "motion"
                            ]
                         },
                         {
-                           "title": "Smoke/Fire",
-                           "enum": [
+                           "title":"Smoke/Fire",
+                           "enum":[
                               "smoke"
                            ]
                         },
                         {
-                           "title": "Water/Leak",
-                           "enum": [
+                           "title":"Water/Leak",
+                           "enum":[
                               "water"
                            ]
                         },
                         {
-                           "title": "Carbon Monoxide",
-                           "enum": [
+                           "title":"Carbon Monoxide",
+                           "enum":[
                               "co"
                            ]
                         },
                         {
-                           "title": "Carbon Dioxide",
-                           "enum": [
+                           "title":"Carbon Dioxide",
+                           "enum":[
                               "co2"
                            ]
                         },
                         {
-                           "title": "Occupancy",
-                           "enum": [
+                           "title":"Occupancy",
+                           "enum":[
                               "occupancy"
                            ]
                         },
                         {
-                           "title": "Contact",
-                           "enum": [
+                           "title":"Contact",
+                           "enum":[
                               "contact"
                            ]
                         }
@@ -217,26 +251,27 @@
             }
          }
       },
-      "required": [
+      "required":[
          "countryCode",
          "username",
          "password"
       ]
    },
-   "layout": [{
-         "type": "fieldset",
-         "items": [
+   "layout":[
+      {
+         "type":"fieldset",
+         "items":[
             "countryCode",
             "username",
             "password"
          ]
       },
       {
-         "type": "fieldset",
-         "title": "Optional",
-         "description": "Only adjust these settings if you know what you are doing.",
-         "expandable": true,
-         "items": [
+         "type":"fieldset",
+         "title":"Optional",
+         "description":"Only adjust these settings if you know what you are doing.",
+         "expandable":true,
+         "items":[
             "debug",
             "debugReqRes",
             "hideDevFromHB",
@@ -246,37 +281,57 @@
          ]
       },
       {
-         "key": "groups",
-         "expandable": true,
-         "title": "Groups",
-         "add": "Add Another Group",
-         "type": "array",
-         "items": [{
-            "type": "fieldset",
-            "items": [
-               "groups[].type",
-               "groups[].deviceId",
-               "groups[].setup",
-               "groups[].operationTime",
-               "groups[].inched",
-               "groups[].sensorId"
-            ]
-         }]
+         "key":"customDevices",
+         "expandable":true,
+         "title":"Custom Devices",
+         "add":"Add Another Custom Device",
+         "type":"array",
+         "items":[
+            {
+               "type":"fieldset",
+               "items":[
+                  "customDevices[].type",
+                  "customDevices[].deviceId"
+               ]
+            }
+         ]
       },
       {
-         "key": "bridgeSensors",
-         "title": "Sensors",
-         "expandable": true,
-         "add": "Add Another Sensor",
-         "type": "array",
-         "items": [{
-            "type": "fieldset",
-            "items": [
-               "bridgeSensors[].deviceId",
-               "bridgeSensors[].fullDeviceId",
-               "bridgeSensors[].type"
-            ]
-         }]
+         "key":"groups",
+         "expandable":true,
+         "title":"Groups",
+         "add":"Add Another Group",
+         "type":"array",
+         "items":[
+            {
+               "type":"fieldset",
+               "items":[
+                  "groups[].type",
+                  "groups[].deviceId",
+                  "groups[].setup",
+                  "groups[].operationTime",
+                  "groups[].inched",
+                  "groups[].sensorId"
+               ]
+            }
+         ]
+      },
+      {
+         "key":"bridgeSensors",
+         "title":"Sensors",
+         "expandable":true,
+         "add":"Add Another Sensor",
+         "type":"array",
+         "items":[
+            {
+               "type":"fieldset",
+               "items":[
+                  "bridgeSensors[].deviceId",
+                  "bridgeSensors[].fullDeviceId",
+                  "bridgeSensors[].type"
+               ]
+            }
+         ]
       }
    ]
 }
