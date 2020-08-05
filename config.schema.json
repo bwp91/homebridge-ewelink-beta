@@ -49,7 +49,7 @@
             "title":"Connection Mode",
             "required":true,
             "default":"ws",
-            "description":"Preferred method of updating devices.",
+            "description":"Preferred method of updating devices. Devices that don't support LAN mode will use web socket.",
             "oneOf":[
                {
                   "title":"Web Socket (Recommended)",
@@ -94,7 +94,7 @@
          "customDevices":{
             "type":"array",
             "title":"Custom Devices",
-            "description":"",
+            "description":"You can use this to simulate another HomeKit accessory type. Currently only irrigation devices are supported.",
             "items":{
                "type":"object",
                "properties":{
@@ -124,7 +124,7 @@
          },
          "groups":{
             "type":"array",
-            "title":"Groups",
+            "title":"Custom Groups",
             "description":"You can group channels of Sonoff devices to simulate another HomeKit accessory instead of having each switch separately. Currently only blinds and garage doors are supported.",
             "items":{
                "type":"object",
@@ -321,7 +321,7 @@
       {
          "key":"groups",
          "expandable":true,
-         "title":"Groups",
+         "title":"Custom Groups",
          "add":"Add Another Group",
          "type":"array",
          "items":[
@@ -340,7 +340,7 @@
       },
       {
          "key":"bridgeSensors",
-         "title":"Sensors",
+         "title":"RF Bridge Sensors",
          "expandable":true,
          "add":"Add Another Sensor",
          "type":"array",
