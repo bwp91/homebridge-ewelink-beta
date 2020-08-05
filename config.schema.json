@@ -44,6 +44,27 @@
             "description":"If enabled, HTTP, web socket and LAN mode messages will be added to the log. Not recommended for long-term use.",
             "default":false
          },
+         "mode":{
+            "type":"string",
+            "title":"Connection Mode",
+            "required":true,
+            "default":"ws",
+            "description":"Preferred method of updating devices.",
+            "oneOf":[
+               {
+                  "title":"Web Socket (Recommended)",
+                  "enum":[
+                     "ws"
+                  ]
+               },
+               {
+                  "title":"LAN Mode",
+                  "enum":[
+                     "lan"
+                  ]
+               }
+            ]
+         },
          "hideDevFromHB":{
             "type":"string",
             "title":"Hide Devices",
