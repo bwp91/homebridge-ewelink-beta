@@ -52,15 +52,15 @@
             "description":"Preferred method of updating devices. Devices that don't support LAN mode will use web socket.",
             "oneOf":[
                {
-                  "title":"Web Socket (Recommended)",
+                  "title":"LAN Mode (Recommended)",
                   "enum":[
-                     "ws"
+                     "lan"
                   ]
                },
                {
-                  "title":"LAN Mode",
+                  "title":"Web Socket",
                   "enum":[
-                     "lan"
+                     "ws"
                   ]
                }
             ]
