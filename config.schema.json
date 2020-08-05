@@ -295,6 +295,7 @@
          "items":[
             "debug",
             "debugReqRes",
+            "mode",
             "hideDevFromHB",
             "hideFromHB",
             "sensorTimeLength",
