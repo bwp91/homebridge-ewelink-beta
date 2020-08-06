@@ -12,22 +12,18 @@
             "default":"eWeLink"
          },
          "countryCode":{
-            "type":"integer",
+            "type":"string",
             "title":"Country Code",
-            "description":"The telephone country code linked to your eWeLink account (without the +).",
-            "placeholder":"1",
-            "maximum":999
+            "description":"The telephone country code linked to your eWeLink account (without the +)."
          },
          "username":{
             "type":"string",
             "title":"Username",
-            "description":"The phone number or email address linked to your eWeLink account.",
-            "placeholder":""
+            "description":"The phone number or email address linked to your eWeLink account."
          },
          "password":{
             "type":"string",
             "title":"Password",
-            "placeholder":"",
             "description":"The password for your eWeLink account."
          },
          "debug":{
