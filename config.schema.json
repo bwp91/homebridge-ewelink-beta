@@ -102,7 +102,7 @@
                      "description":"A description of this group.",
                      "oneOf":[
                         {
-                           "title":"Irrigation Device",
+                           "title":"Irrigation/Sprinkler",
                            "enum":[
                               "valve"
                            ]
