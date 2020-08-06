@@ -70,7 +70,7 @@
          "hideFromHB":{
             "type":"string",
             "title":"Hide Device Channels",
-            "description":"A list of device channels to hide from Homebridge. For example '10009553c8SW1' or multiple channels separated with a comma '10009553c8SW1,10009553c9SW2'.",
+            "description":"A list of device channels to hide from Homebridge. For example '10009553c8SW1' or multiple channels separated with a comma '10009553c8SW1,10009553c9SW2'. Only channels from switches, lights and irrigation valves can be hidden.",
             "default":""
          },
          "sensorTimeLength":{
