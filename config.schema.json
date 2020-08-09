@@ -87,37 +87,6 @@
             "default":"120",
             "maximum":999
          },
-         "customDevices":{
-            "type":"array",
-            "title":"Custom Devices",
-            "description":"You can use this to simulate another HomeKit accessory type. Currently only irrigation devices are supported.",
-            "items":{
-               "type":"object",
-               "properties":{
-                  "type":{
-                     "type":"string",
-                     "title":"Type",
-                     "required":true,
-                     "default":"null",
-                     "description":"A description of this group.",
-                     "oneOf":[
-                        {
-                           "title":"Irrigation/Sprinkler",
-                           "enum":[
-                              "valve"
-                           ]
-                        }
-                     ]
-                  },
-                  "deviceId":{
-                     "type":"string",
-                     "title":"Device ID",
-                     "required":true,
-                     "description":"Device ID from your eWeLink app (ten digits normally in the format 1000******)."
-                  }
-               }
-            }
-         },
          "groups":{
             "type":"array",
             "title":"Custom Groups",
@@ -190,7 +159,7 @@
                   "sensorId":{
                      "type":"string",
                      "title":"Sensor",
-                     "description":"A Sonoff DW2 sensor is required for a 'one switch' setup. This is to determine the current open/closed state of this device. Please enter the 10 digit device ID. Otherwise leave this blank."
+                     "description":"A Sonoff DW2 sensor can be used for a 'one switch' setup. This is to determine the current open/closed state of this device. Please enter the 10 digit device ID. Otherwise leave this blank."
                   }
                }
             }
@@ -296,22 +265,6 @@
             "hideFromHB",
             "sensorTimeLength",
             "sensorTimeDifference"
-         ]
-      },
-      {
-         "key":"customDevices",
-         "expandable":true,
-         "title":"Custom Devices",
-         "add":"Add Another Custom Device",
-         "type":"array",
-         "items":[
-            {
-               "type":"fieldset",
-               "items":[
-                  "customDevices[].type",
-                  "customDevices[].deviceId"
-               ]
-            }
          ]
       },
       {
