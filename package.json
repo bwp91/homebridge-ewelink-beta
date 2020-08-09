@@ -44,5 +44,15 @@
       "node-dns-sd": "0.4.1",
       "nonce": "1.0.4",
       "ws": "7.3.1"
-   }
+   },
+   "funding": [
+      {
+         "type" : "patreon",
+         "url" : "https://www.patreon.com/bwp91"
+      },
+      {
+         "type" : "paypal",
+         "url" : "https://www.paypal.me/BenPotter"
+      }
+   ]
 }
