@@ -87,6 +87,13 @@
             "default":"120",
             "maximum":999
          },
+         "valveTimeLength":{
+            "type":"integer",
+            "title":"Valve Duration",
+            "description":"The default number of seconds that irrigation valves will run for.",
+            "default":"20",
+            "maximum":999
+         },
          "groups":{
             "type":"array",
             "title":"Custom Groups",
@@ -264,7 +271,8 @@
             "hideDevFromHB",
             "hideFromHB",
             "sensorTimeLength",
-            "sensorTimeDifference"
+            "sensorTimeDifference",
+            "valveTimeLength"
          ]
       },
       {
