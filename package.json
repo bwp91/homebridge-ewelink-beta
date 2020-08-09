@@ -1,6 +1,6 @@
 {
    "name": "homebridge-ewelink-beta",
-   "version": "2.16.0",
+   "version": "2.16.2",
    "author": "bwp91",
    "contributors": [
       "gbro115",
@@ -47,12 +47,12 @@
    },
    "funding": [
       {
-         "type" : "patreon",
-         "url" : "https://www.patreon.com/bwp91"
+         "type": "patreon",
+         "url": "https://www.patreon.com/bwp91"
       },
       {
-         "type" : "paypal",
-         "url" : "https://www.paypal.me/BenPotter"
+         "type": "paypal",
+         "url": "https://www.paypal.me/BenPotter"
       }
    ]
 }
