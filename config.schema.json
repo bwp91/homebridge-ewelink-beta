@@ -197,6 +197,12 @@
                      "required":true,
                      "oneOf":[
                         {
+                           "title":"Button",
+                           "enum":[
+                              "button"
+                           ]
+                        },
+                        {
                            "title":"Motion",
                            "enum":[
                               "motion"
