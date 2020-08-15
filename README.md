@@ -1,6 +1,7 @@
 <div align="center">
 <h1>homebridge-ewelink-beta</h1>   
     
+[![Discord](https://img.shields.io/discord/432663330281226270?color=728ED5&logo=discord&label=discord)](https://discord.com/channels/432663330281226270/742733745743855627)
 [![npm](https://img.shields.io/npm/dt/homebridge-ewelink-beta)](https://www.npmjs.com/package/homebridge-ewelink-sonoff)   
 [![npm](https://img.shields.io/npm/v/homebridge-ewelink-sonoff?label=release)](https://www.npmjs.com/package/homebridge-ewelink-sonoff)
 [![npm](https://img.shields.io/npm/v/homebridge-ewelink-beta?label=beta)](https://www.npmjs.com/package/homebridge-ewelink-beta)
