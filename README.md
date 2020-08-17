@@ -18,6 +18,8 @@ Being a beta package, it could very well cause errors to the point of your Homeb
 
 To switch between the different versions you can use Homebridge Config UI X to uninstall and reinstall the other. The configuration is exactly the same for both. Or, simply run these commands in the Homebridge terminal and then restart Homebridge. I keep the version numbers synchronised so if both packages have the same version then they are identical at that point in time.
 
+> Please note these commands will only work in Homebridge. They will **not** work in HOOBS.
+
 #### Beta Version (homebridge-ewelink-beta)
 To change to the beta version:
 ```bash
